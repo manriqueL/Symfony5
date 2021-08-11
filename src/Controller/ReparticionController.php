@@ -73,18 +73,16 @@ class ReparticionController extends BaseController
      * @Route("/admin/reparticion/delete/{id}",name="delete_reparticion")
      * @IsGranted("ROLE_SUPERUSER")
      */
-    public function delete(Reparticion $reparticion){
-        /*$this->addFlash("success","Utilisateur supprimé");
-        return $this->redirectToRoute('index_reparticion');*/
-        //$eliminar = $this->reparticionRepository->delete($reparticion);
-        $eliminar = true;
-        
-        if($eliminar){
-            $this->addFlash("success","Repartición eliminada");
-            return $this->redirectToRoute('index_reparticion', array(["message" => "success"]));
-        }else{
-            $this->addFlash("danger","Error al eliminar la repartición");
-            return $this->redirectToRoute('index_reparticion');
-        }        
+    public function delete(Request $request, Reparticion $reparticion){
+        if ($this->isCsrfTokenValid('delete'.$reparticion->getId(), $request->request->get('_token'))) {
+            $resp = $this->reparticionRepository->delete($reparticion);
+            if($resp === true){
+                $this->addFlash('success', '¡Registro eliminado correctamente!');
+            }else{
+                $this->addFlash('error', '¡Error al eliminar el registro!');
+            }
+        }
+        return $this->redirectToRoute('index_reparticion');          
     }
+    
 }

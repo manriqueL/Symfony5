@@ -4968,3 +4968,26 @@ ul.notifications {
 
 .calendar-exibit .calendar-table {
   padding: 0 0 4px 0; }
+
+
+/* CUSTOM CSS */
+.btn-cell-table{
+  width: 37px;
+  text-align: center;
+}
+.btn-table-width{
+  width: 0px;
+}
+.title-page{
+  color: #3a444e;
+  font-size: 20px;
+}
+.btn-success-custom{
+    color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+.btn-success-custom:hover {
+  color: #fff !important;
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}

@@ -22,9 +22,9 @@ class ReparticionRepository extends ServiceEntityRepository
         try {
             $this->entityManager->remove($reparticion);
             $this->entityManager->flush();
-            return "success";
+            return true;
         } catch (\Exception $e) {
-            return "error";
+            return $e;
         }
     }
 }
