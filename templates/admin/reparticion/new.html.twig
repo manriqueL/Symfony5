@@ -1,0 +1,66 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+
+  <div class="">
+		<div class="page-title">
+			<div class="title_left">
+				<h5>
+					Crear nueva repartición
+				</h5>
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="x_panel">
+					<div class="x_content">
+						<div class="row">
+                <div class="card">
+                  <div class="card-body">
+                    {{ include('admin/reparticion/_form.html.twig') }}
+                  </div>
+                </div>
+
+								{# <tbody>
+									{% for user in users|filter(user => not user.deleted)  %}
+										<tr>
+											<td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ user.id }}"></td>
+											<td>{{ user.username }}</td>
+											<td>{{ user.email }}</td>
+											<td>{{ user.nomComplet }}</td>
+											<td>
+												<a class="btn btn-primary" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
+													<i class="fa fa-edit"></i>
+												</a>
+											</td>
+											<td>
+												{%  if user.valid %}
+													<a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
+														<i class="fa fa-check"></i>
+													</a>
+												{% else %}
+													<a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
+														<i class="fa fa-times"></i>
+													</a>
+												{% endif %}
+											</td>
+											<td>
+												<a href="{{ path('app_admin_delete_user', {'id': user.id}) }}" class="btn btn-danger disable-btn del-link" type="submit">
+													<i class="fa fa-trash"></i>
+												</a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody> #}
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

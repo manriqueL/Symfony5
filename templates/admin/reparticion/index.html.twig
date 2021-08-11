@@ -1,0 +1,67 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+    <div class="">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2 class="title-page">Lista de reparticiones</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a href="{{ path('new_reparticion') }}" class="btn btn-success">NEW</a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+
+                            {# EN CASO DE QUERER UTILIZAR EL GRUOP ACTION #}
+                            {# <form action="{{ path('app_admin_groupaction_categorie') }}" id="grpaction" method="post" name="grpaction">
+                                <div class="form-group form-inline">
+                                    <select class="form-control" name="action" required id="action_select">
+                                        <option value="">Action de groupe</option>
+                                        <option value="desactiver">Desactiver</option>
+                                        <option value="activer">Activer</option>
+                                        <option value="supprimer">Supprimer</option>
+                                    </select>
+                                    <button class="btn btn-primary" type="submit">Go!!</button>
+                                </div>
+                            </form> #}
+
+                            <div class="table-responsive">
+                                <table id="example" class="display table table-striped table-bordered dataminetables" >
+                                    <thead>
+
+                                        {# EN CASO DE QUERER UTILIZAR EL GRUOP ACTION #}
+                                        {# <th><input type="checkbox" id="select_all" name="select_all"></th> #}
+                                        
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th class="btn-table-width">Acciones</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for reparticion in reparticiones %}
+                                            <tr>
+
+                                                {# EN CASO DE QUERER UTILIZAR EL GRUOP ACTION #}
+                                                {# <td class="align-middle"><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ reparticion.id }}"></td> #}
+
+                                                <td class="align-middle">{{ reparticion.id }}</td>
+                                                <td class="align-middle">{{ reparticion.nombre }}</td>
+                                                <td class="btn-cell-table align-middle">
+                                                    <a class="btn btn-primary btn-sm btn-table-margin" href="{{ path('edit_reparticion',{"id":reparticion.id}) }}"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-danger btn-sm disable-btn del-link btn-table-margin" href="{{ path('delete_reparticion', {'id': reparticion.id}) }}"  type="submit" ><i class="fa fa-trash"></i></a>
+                                                </td>                                                
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

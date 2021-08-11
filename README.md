@@ -1,29 +1,16 @@
-# README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Requisitos para instalar el proyecto en local
+1. Tener instalado Node en versión >= 12.13.0 (node --version para ver la versión actual instalada).
+2. Tener PHP > 7.2
+3. Tener instalado Yarn (npm install --global yarn)
 
-### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+## Setup nuevo proyecto
+1. Crear la base de datos local
+2. **Copiar** el archivo .env.example a .env y adaptar los parámetros para la conexión mysql
+3. composer require "ext-gd:*" --ignore-platform-reqs
+4. php bin/console doctrine:schema:create
+5. php bin/console doctrine:fixtures:load
+6. symfony server:start
+7. Abrir navegador en la dirección localhost:8000/admin
+8. Loguear con credenciales: admin/admin
