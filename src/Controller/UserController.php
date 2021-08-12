@@ -112,12 +112,17 @@ class UserController extends BaseController
      * @Route("/admin/user/delete/{id}",name="app_admin_delete_user")
      * @IsGranted("ROLE_SUPERUSER")
      */
-    public function delete(User $user)
+    public function delete(Request $request, User $user)
     {
-        $user = $this->userRepository->delete($user);
-        /*$this->addFlash("success","Utilisateur supprimé");
-        return $this->redirectToRoute('app_admin_users');*/
-        return $this->json(["message" => "success", "value" => $user->isDeleted()]);
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $resp = $this->userRepository->delete($user);
+            if($resp === true){
+                $this->addFlash('success', '¡Registro eliminado correctamente!');
+            }else{
+                $this->addFlash('error', '¡Error al eliminar el registro!');
+            }
+        }
+        return $this->redirectToRoute('app_admin_users');
     }
 
     /**
@@ -149,35 +154,4 @@ class UserController extends BaseController
         return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
     }
 
-    /**
-     * @Route("/admin/user/groupaction",name="app_admin_groupaction_user")
-     * @IsGranted("ROLE_SUPERUSER")
-     */
-    public function groupAction(Request $request, TranslatorInterface $translator)
-    {
-        $action = $request->get("action");
-        $ids = $request->get("ids");
-        $users = $this->userRepository->findBy(["id" => $ids]);
-
-        if ($action == $translator->trans('backend.user.deactivate')) {
-            foreach ($users as $user) {
-                $user->setValid(false);
-                $this->entityManager->persist($user);
-            }
-        } else if ($action == $translator->trans('backend.user.Activate')) {
-            foreach ($users as $user) {
-                $user->setValid(true);
-                $this->entityManager->persist($user);
-            }
-        } else if ($action == $translator->trans('backend.user.delete')) {
-            foreach ($users as $user) {
-                $user->setDeleted(true);
-                $this->entityManager->persist($user);
-            }
-        } else {
-            return $this->json(["message" => "error"]);
-        }
-        $this->entityManager->flush();
-        return $this->json(["message" => "success", "nb" => count($users)]);
-    }
 }

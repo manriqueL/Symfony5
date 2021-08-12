@@ -1,94 +1,64 @@
 {% extends "admin/bars.html.twig" %}
 
 {% block contenpage %}
-	<div class="">
-		<div class="page-title">
-			<div class="title_left">
-				<h5>
-					{{ "backend.user.listing"|trans }}
-				</h5>
-			</div>
-		</div>
-
-		<div class="clearfix"></div>
-
-		<div class="row">
-			<div class="col-md-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>
-							{{ "backend.user.user_listing"|trans }}</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li>
-								<a href="{{ path('app_admin_new_user') }}" class="btn btn-success">NEW</a>
-							</li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="row">
-							<form action="{{ path('app_admin_groupaction_user') }}" id="grpaction" method="post" name="grpaction">
-								<div class="form-group form-inline">
-									<select class="form-control" name="action" required id="action_select">
-										<option value="">
-											{{ "backend.user.group_actions"|trans }}</option>
-										<option value="{{"backend.user.deactivate"|trans }}">
-											{{ "backend.user.deactivate"|trans }}</option>
-										<option value="{{"backend.user.Activate"|trans }}">
-											{{ "backend.user.Activate"|trans }}</option>
-										<option value="{{"backend.user.delete"|trans }}">
-											{{ "backend.user.delete"|trans }}</option>
-									</select>
-									<button class="btn btn-primary" type="submit">Go!!</button>
-								</div>
-
-							</form>
-							<table id="example" class="display table table-striped table-bordered dataminetables">
-								<thead>
-									<th><input type="checkbox" id="select_all" name="select_all"></th>
-									<th>{{ "backend.user.username"|trans }}</th>
-									<th>{{ "backend.user.email"|trans }}</th>
-									<th>{{ "backend.user.name"|trans }}</th>
-									<th>{{ "backend.user.modifier"|trans }}</th>
-									<th>{{ "backend.user.status"|trans }}</th>
-									<th>{{ "backend.user.delete"|trans }}</th>
-								</thead>
-								<tbody>
-									{% for user in users|filter(user => not user.deleted)  %}
-										<tr>
-											<td><input type="checkbox" class="chkgrp" name="chkgrp[]" value="{{ user.id }}"></td>
-											<td>{{ user.username }}</td>
-											<td>{{ user.email }}</td>
-											<td>{{ user.nomComplet }}</td>
-											<td>
-												<a class="btn btn-primary" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
-													<i class="fa fa-edit"></i>
-												</a>
-											</td>
-											<td>
-												{%  if user.valid %}
-													<a class="btn btn-success activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
-														<i class="fa fa-check"></i>
-													</a>
-												{% else %}
-													<a class="btn btn-warning activate-link" href="{{ path('app_admin_changevalidite_user', {'id': user.id}) }}">
-														<i class="fa fa-times"></i>
-													</a>
-												{% endif %}
-											</td>
-											<td>
-												<a href="{{ path('app_admin_delete_user', {'id': user.id}) }}" class="btn btn-danger disable-btn del-link" type="submit">
-													<i class="fa fa-trash"></i>
-												</a>
-											</td>
-										</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2 class="title-page">Lista de usuarios</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+								<a href="{{ path('app_admin_new_user') }}" class="btn btn-success-custom">Nuevo</a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table id="example" class="display table table-striped table-bordered dataminetables" >
+                                    <thead>
+                                        <th class="btn-table-width">Id</th>
+                                        <th>Usuario</th>
+										<th>Email</th>
+										<th>Nombre</th>
+                                        <th class="btn-table-width">Acciones</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in users %}
+                                            <tr>
+                                                <td class="align-middle">{{ user.id }}</td>
+                                                <td class="align-middle">{{ user.username }}</td>
+												<td class="align-middle">{{ user.email }}</td>
+												<td class="align-middle">{{ user.nomComplet }}</td>
+                                                <td class="btn-cell-table align-middle">
+                                                    <a class="btn btn-primary btn-sm btn-table-margin" href="{{ path('app_admin_edit_user',{"id":user.id}) }}"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-danger btn-sm disable-btn del-link btn-table-margin" title="Eliminar registro" href="javascript:void(0)" data-toggle="modal" data-target="#modalEliminar{{user.id}}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+{% block modal_content %}
+  {% for user in users %}
+    <div id="modalEliminar{{ user.id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          {{ include('admin/user/_delete_form.html.twig', {'id': user.id }) }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock modal_content %}
