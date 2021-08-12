@@ -2,7 +2,6 @@
 ## Requisitos para instalar el proyecto en local
 1. Tener instalado Node en versión >= 12.13.0 (node --version para ver la versión actual instalada).
 2. Tener PHP > 7.2
-3. Tener instalado Yarn (npm install --global yarn)
 
 
 ## Setup nuevo proyecto
