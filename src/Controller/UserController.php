@@ -45,7 +45,18 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/new",name="app_admin_new_user")
+     * @Route("/admin/user/{id}", name="show_user", requirements={"id":"\d+"}))
+     * @IsGranted("ROLE_SUPERUSER")
+     */
+    public function show(Request $request, User $user)
+    {    
+        return $this->render('admin/user/show.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/admin/user/new", name="app_admin_new_user")
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function newUser(Request $request, TranslatorInterface $translator)
@@ -53,9 +64,7 @@ class UserController extends BaseController
         $form = $this->createForm(UserFormType::class, null, ["translator" => $translator]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var  User $user */
             $user = $form->getData();
-            /** @var Role $role */
             $password = $form["justpassword"]->getData();
             $role = $form["role"]->getData();
             $user->setValid(true)
@@ -67,12 +76,12 @@ class UserController extends BaseController
             $this->entityManager->flush();
             $this->addFlash("success", $translator->trans('backend.user.add_user'));
             return $this->redirectToRoute("app_admin_users");
-        }
+        }        
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
     }
 
     /**
-     * @Route("/admin/user/edit/{id}",name="app_admin_edit_user")
+     * @Route("/admin/user/edit/{id}", name="app_admin_edit_user", requirements={"id":"\d+"}))
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function editUser(User $user, Request $request, TranslatorInterface $translator)
@@ -83,7 +92,6 @@ class UserController extends BaseController
         $form->get('role')->setData($therole);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Role $role */
             $role = $form["role"]->getData();
             $password = $form["justpassword"]->getData();
             $user->setRoles([$role->getRoleName()]);
@@ -99,7 +107,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/changevalidite/{id}",name="app_admin_changevalidite_user",methods={"post"})
+     * @Route("/admin/user/changevalidite/{id}",name="app_admin_changevalidite_user",methods={"post"}, requirements={"id":"\d+"}))
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function activate(User $user)
@@ -109,7 +117,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/delete/{id}",name="app_admin_delete_user")
+     * @Route("/admin/user/delete/{id}",name="app_admin_delete_user", requirements={"id":"\d+"}))
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function delete(Request $request, User $user)

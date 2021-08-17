@@ -1,0 +1,64 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+
+<div class="">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="x_panel">
+        <div class="x_title">
+            <h2 class="title-page">Usuario ID: {{ user.id }}</h2>            
+            <a class="btn btn-primary btn-sm float-right" style="margin-right:15px;" href="{{ path('app_admin_users') }}">
+              <i class="fa fa-mail-reply"></i> &nbsp; Volver al listado
+            </a>
+            <a class="btn btn-primary btn-sm float-right" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
+              <i class="fa fa-edit"></i> &nbsp; Editar
+            </a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="table-responsive">
+              <div class="row text-left" style="margin:0 0 20px 0;">               
+                <div class="col-md ml-md-auto text-md-right">                          
+                  <div class="row text-left">
+                    <table class="table">
+                      <tbody>
+                        {# Nombre #}
+                        <tr>
+                          <th width="150" class="text-right">Nombre:</th>
+                          <td>{{ user.nomComplet }}</td>
+                        </tr>
+                        {# Email #}
+                        <tr>
+                          <th width="150" class="text-right">Email:</th>
+                          <td>{{ user.email }}</td>
+                        </tr>
+                        {# Usuario #}
+                        <tr>
+                          <th width="150" class="text-right">Usuario:</th>
+                          <td>{{ user.username }}</td>
+                        </tr>
+                        {# Roles #}                        
+                          <tr>
+                            <th width="150" class="text-right">Role:</th>
+                            {% if user.roles %}
+                              <td>{{ user.roles[0] }}</td>
+                            {% else %}
+                              <td>Sin roles asignados</td>
+                            {% endif %}
+                          </tr>                        
+                      </tbody>
+                    </table>   
+                  </div>
+                </div>
+              </div>    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock contenpage %}

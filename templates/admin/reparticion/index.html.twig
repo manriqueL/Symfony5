@@ -8,7 +8,10 @@
                     <div class="x_title">
                         <h2 class="title-page">Lista de reparticiones</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="{{ path('new_reparticion') }}" class="btn btn-success-custom">Nuevo</a>
+                            <li>
+                                <a href="{{ path('new_reparticion') }}" class="btn btn-success-custom">
+                                    <i class="fa fa-plus"></i> &nbsp; Nuevo
+                                </a>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
@@ -28,9 +31,14 @@
                                                 <td class="align-middle">{{ reparticion.id }}</td>
                                                 <td class="align-middle">{{ reparticion.nombre }}</td>
                                                 <td class="btn-cell-table align-middle">
-                                                    <a class="btn btn-primary btn-sm btn-table-margin" href="{{ path('edit_reparticion',{"id":reparticion.id}) }}"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-danger btn-sm disable-btn del-link btn-table-margin" title="Eliminar registro" href="javascript:void(0)" data-toggle="modal" data-target="#modalEliminar{{reparticion.id}}">
+                                                    <a class="btn btn-primary btn-sm btn-table-margin" alt="Editar" href="{{ path('edit_reparticion',{"id":reparticion.id}) }}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger btn-sm btn-table-margin" title="Eliminar registro" href="javascript:void(0)" data-toggle="modal" data-target="#modalEliminar{{reparticion.id}}">
                                                         <i class="fa fa-trash"></i>
+                                                    </a>                                                    
+                                                    <a class="btn btn-success btn-sm btn-table-margin" href="{{ path('show_reparticion',{"id":reparticion.id}) }}">
+                                                        <i class="fa fa-th-large"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -49,7 +57,7 @@
 {% block modal_content %}
   {% for reparticion in reparticiones %}
     <div id="modalEliminar{{ reparticion.id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog">
         <div class="modal-content">
           {{ include('admin/reparticion/_delete_form.html.twig', {'id': reparticion.id }) }}
         </div>

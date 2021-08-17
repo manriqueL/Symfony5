@@ -35,6 +35,17 @@ class ReparticionController extends BaseController
     }
 
     /**
+     * @Route("/admin/reparticion/{id}", name="show_reparticion", requirements={"id":"\d+"})
+     * @IsGranted("ROLE_SUPERUSER")
+     */
+    public function show(Request $request, Reparticion $reparticion)
+    {    
+        return $this->render('admin/reparticion/show.html.twig', [
+            'reparticion' => $reparticion
+        ]);
+    }
+
+    /**
      * @Route("/admin/reparticion/new",name="new_reparticion")
      * @IsGranted("ROLE_SUPERUSER")
      */
@@ -54,7 +65,7 @@ class ReparticionController extends BaseController
     }
 
     /**
-     * @Route("/admin/reparticion/edit/{id}",name="edit_reparticion")
+     * @Route("/admin/reparticion/edit/{id}",name="edit_reparticion", requirements={"id":"\d+"})
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function edit(Reparticion $reparticion, Request $request){
@@ -70,7 +81,7 @@ class ReparticionController extends BaseController
     }   
 
     /**
-     * @Route("/admin/reparticion/delete/{id}",name="delete_reparticion")
+     * @Route("/admin/reparticion/delete/{id}",name="delete_reparticion", requirements={"id":"\d+"})
      * @IsGranted("ROLE_SUPERUSER")
      */
     public function delete(Request $request, Reparticion $reparticion){
