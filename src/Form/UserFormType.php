@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class UserFormType extends AbstractType
 {
@@ -24,13 +25,38 @@ class UserFormType extends AbstractType
         $builder
             ->add("username", TextType::class, ["label" => $this->translator->trans('backend.user.username')])
             ->add("email", EmailType::class)
-            ->add("nomComplet", TextType::class, ["label" => $this->translator->trans('backend.user.name')])
+            ->add("nombre", TextType::class, [
+                "label" => "Nombre",
+                "required" => true,
+                "constraints" => [
+                    new NotBlank(["message" => "El campo no puede estar vacío"])
+                ]
+            ])
+            ->add("apellido", TextType::class, [
+                "label" => "Apellido",
+                "required" => true,
+                "constraints" => [
+                    new NotBlank(["message" => "El campo no puede estar vacío"])
+                ]
+            ])
+            ->add("dni", NumberType::class, [
+                "label" => "DNI"
+            ])
+            ->add("cuil", NumberType::class, [
+                "label" => "CUIL"
+            ])
+            ->add("telefono", NumberType::class, [
+                "label" => "Teléfono"
+            ])
+            ->add("direccion", TextType::class, [
+                "label" => "Dirección"
+            ])
             ->add("justpassword", TextType::class, [
                 "label" => $this->translator->trans('backend.user.password'),
                 "required" => true,
                 "mapped" => false,
                 "constraints" => [
-                    new NotBlank(["message" => $this->translator->trans('backend.global.must_not_be_empty')])
+                    new NotBlank(["message" => "El campo no puede estar vacío"])
                 ]
             ])
             ->add("role", EntityType::class, [
@@ -39,7 +65,7 @@ class UserFormType extends AbstractType
                 "required" => true,
                 "placeholder" => $this->translator->trans('backend.role.choice_role'),
                 "constraints" => [
-                    new NotBlank(["message" => $this->translator->trans('backend.global.must_not_be_empty')]),
+                    new NotBlank(["message" => "El campo no puede estar vacío"])
                 ]
             ]);
     }

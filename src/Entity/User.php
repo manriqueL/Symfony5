@@ -27,33 +27,59 @@ class User implements UserInterface, EquatableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank( message="Ne doit pas être vide")
+     * @ORM\Column(type="string", length=180, unique=true, nullable=false)
+     * @Assert\NotBlank( message="El campo no puede estar vacío")
      */
     private $username;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=false)
      */
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank(message="Ne doit pas être vide")
+     * @ORM\Column(type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="El campo no puede estar vacío")
      */
-    private $nomComplet;
+    private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true)
-     * @Assert\NotBlank(message="Ne doit pas être vide")
-     * @Assert\Email(message="Email invalide")
+     * @ORM\Column(type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="El campo no puede estar vacío")
+     */
+    private $apellido;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="El campo no puede estar vacío")
+     * @Assert\Email(message="Email inválido")
      */
     private $email;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $dni;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $cuil;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $telefono;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $direccion;
+
+    /**
      * @ORM\Column(type="boolean")
      */
-    private $valid;
+    private $suspended;
 
     /**
      * @ORM\Column(type="boolean")
@@ -63,18 +89,11 @@ class User implements UserInterface, EquatableInterface
     /**
      * @ORM\Column(type="string", length=255))
      */
-    private $password;
-   
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $admin;
+    private $password;   
 
     public function __construct()
     {
-        $this->blogPosts = new ArrayCollection();
-        $this->blogPostsCreated = new ArrayCollection();
-        $this->historiques = new ArrayCollection();
+        //
     }
 
     public function getId(): ?int
@@ -116,15 +135,7 @@ class User implements UserInterface, EquatableInterface
         $this->roles = $roles;
 
         return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+    }   
 
     /**
      * @see UserInterface
@@ -143,18 +154,6 @@ class User implements UserInterface, EquatableInterface
         // $this->plainPassword = null;
     }
 
-    public function getNomComplet(): ?string
-    {
-        return $this->nomComplet;
-    }
-
-    public function setNomComplet( $nomComplet): self
-    {
-        $this->nomComplet = $nomComplet;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -167,14 +166,14 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
 
-    public function isValid(): ?bool
+    public function getSuspended(): ?bool
     {
-        return $this->valid;
+        return $this->suspended;
     }
 
-    public function setValid(bool $valid): self
+    public function setSuspended(bool $suspended): self
     {
-        $this->valid = $valid;
+        $this->suspended = $suspended;
 
         return $this;
     }
@@ -191,58 +190,104 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
     public function setPassword($password): self
     {
         $this->password = $password;
 
         return $this;
     }
-
-    public function getAvatarUrl($size){
-        return "https://api.adorable.io/avatars/$size/".$this->username;
-    }
-
-
-    function getColorCode() {
-        $code = dechex(crc32($this->getUsername()));
-        $code = substr($code, 0, 6);
-        return "#".$code;
-    }
-
-    /**
-     * @Assert\Callback
-     */
-
-    public function validate(ExecutionContextInterface $context, $payload)
-    {
-        /*if (strlen($this->password)< 3){
-            $context->buildViolation('Mot de passe trop court')
-                ->atPath('justpassword')
-                ->addViolation();
-        }*/
-    }
     
     public function __toString()
     {
-        return "$this->nomComplet ($this->id)";
-    }
-
-    public function isAdmin(): ?bool
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin(bool $admin): self
-    {
-        $this->admin = $admin;
-
-        return $this;
+        return "$this->apellido.','.$this->nombre ($this->id)";
     }
 
     public function isEqualTo(UserInterface $user)
     {
         if ($user instanceof User)
-        return $this->isValid() && !$this->isDeleted() && $this->getPassword() == $user->getPassword() && $this->getUsername() == $user->getUsername()
+        return !$this->getSuspended() && !$this->isDeleted() && $this->getPassword() == $user->getPassword() && $this->getUsername() == $user->getUsername()
             && $this->getEmail() == $user->getEmail() ;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre): self
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getApellido(): ?string
+    {
+        return $this->apellido;
+    }
+
+    public function setApellido(string $apellido): self
+    {
+        $this->apellido = $apellido;
+
+        return $this;
+    }
+
+    public function getDni(): ?int
+    {
+        return $this->dni;
+    }
+
+    public function setDni(int $dni): self
+    {
+        $this->dni = $dni;
+
+        return $this;
+    }
+
+    public function getCuil(): ?int
+    {
+        return $this->cuil;
+    }
+
+    public function setCuil(int $cuil): self
+    {
+        $this->cuil = $cuil;
+
+        return $this;
+    }
+
+    public function getTelefono(): ?int
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(int $telefono): self
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    public function getDireccion(): ?string
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion(string $direccion): self
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
     }
 }

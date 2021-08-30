@@ -67,14 +67,13 @@ class UserController extends BaseController
             $user = $form->getData();
             $password = $form["justpassword"]->getData();
             $role = $form["role"]->getData();
-            $user->setValid(true)
+            $user->setSuspended(false)
                 ->setDeleted(false)
-                ->setAdmin(true)
                 ->setPassword($this->passwordEncoder->encodePassword($user, $password))
                 ->setRoles([$role->getRoleName()]);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $this->addFlash("success", $translator->trans('backend.user.add_user'));
+            $this->addFlash("success-nuevo","");
             return $this->redirectToRoute("app_admin_users");
         }        
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
@@ -100,7 +99,7 @@ class UserController extends BaseController
             }
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $this->addFlash("success", $translator->trans('backend.user.modify_user'));
+            $this->addFlash("success-modificado","");
             return $this->redirectToRoute("app_admin_users");
         }
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
@@ -125,9 +124,9 @@ class UserController extends BaseController
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $resp = $this->userRepository->delete($user);
             if($resp === true){
-                $this->addFlash('success', '¡Registro eliminado correctamente!');
+                $this->addFlash("success-eliminado","");
             }else{
-                $this->addFlash('error', '¡Error al eliminar el registro!');
+                $this->addFlash("error-eliminado","");
             }
         }
         return $this->redirectToRoute('app_admin_users');
@@ -150,13 +149,13 @@ class UserController extends BaseController
             if ($this->passwordEncoder->isPasswordValid($user, $password)) {
                 $user->setPassword($this->passwordEncoder->encodePassword($user, $newPassword));
             } else {
-                $this->addFlash("error", $translator->trans('backend.user.new_passwod_must_be'));
+                $this->addFlash("error", "Las contraseñas deben ser iguales");
                 return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
             }
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $this->addFlash("success", $translator->trans('backend.user.changed_password'));
+            $this->addFlash("success", "Contraseña actualizada correctamente!");
             return $this->redirectToRoute("app_admin_index");
         }
         return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);

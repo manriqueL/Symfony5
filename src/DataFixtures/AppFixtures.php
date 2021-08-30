@@ -47,11 +47,11 @@ class AppFixtures extends Fixture
             $user->setUsername('admin');
             $user->setRoles(["ROLE_SUPERUSER"]);
             $user->setPassword($this->encoder->encodePassword($user, 'admin'));
-            $user->setNomComplet('Admin');
+            $user->setNombre('Admin');
+            $user->setApellido('Admin');
             $user->setEmail('admin@example.com');
-            $user->setValid(true);
+            $user->setSuspended(false);
             $user->setDeleted(false);
-            $user->setAdmin(true);
             $manager->persist($user);
 
             $manager->flush();
