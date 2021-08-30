@@ -4163,43 +4163,17 @@ a.hiddenanchor {
   line-height: 20px;
   margin: 10px 0 30px; }
 
-.login_content h1:before, .login_content h1:after {
-  content: "";
-  height: 1px;
-  position: absolute;
-  top: 10px;
-  width: 27%; }
 
 .login_content h1:after {
   background: #7e7e7e;
   background: -webkit-gradient(linear, left top, right top, from(#7e7e7e), to(white));
-  background: linear-gradient(to right, #7e7e7e 0%, white 100%);
   right: 0; }
 
 .login_content h1:before {
   background: #7e7e7e;
   background: -webkit-gradient(linear, right top, left top, from(#7e7e7e), to(white));
-  background: linear-gradient(to left, #7e7e7e 0%, white 100%);
   left: 0; }
 
-.login_content h1:before, .login_content h1:after {
-  content: "";
-  height: 1px;
-  position: absolute;
-  top: 10px;
-  width: 20%; }
-
-.login_content h1:after {
-  background: #7e7e7e;
-  background: -webkit-gradient(linear, left top, right top, from(#7e7e7e), to(white));
-  background: linear-gradient(to right, #7e7e7e 0%, white 100%);
-  right: 0; }
-
-.login_content h1:before {
-  background: #7e7e7e;
-  background: -webkit-gradient(linear, right top, left top, from(#7e7e7e), to(white));
-  background: linear-gradient(to left, #7e7e7e 0%, white 100%);
-  left: 0; }
 
 .login_content form {
   margin: 20px 0 0 0;
@@ -4224,6 +4198,15 @@ a.hiddenanchor {
   background-color: #fff;
   border: 1px solid #A878AF;
   outline: none; }
+  
+.recuperar{
+  line-height: 26px !important;
+  font-size: 20px !important;
+}
+.sub-recuperar{
+  line-height: 22px !important;
+  font-size: 18px !important;
+}
 
 #username {
   background-position: 10px 10px !important; }

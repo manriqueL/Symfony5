@@ -5,13 +5,18 @@
 
 {% block body %}
 	<div class="login_wrapper">
+			<div class="login_form_header">
+				<div class="isologotipo">
+					<h2>SIDI - TSJ La Rioja</h2>
+				</div>
+			</div>
 		<div class="animate form login_form">
 			<section class="login_content">
-				<h1>An email has been sent that contains a link that you can click to reset your password. This link will expire in
-					{{ tokenLifetime|date('g') }}
-					hour(s).</h1>
-				<h2>If you don't receive an emai please check your spam folder or
-					<a href="{{ path('app_forgot_password_request') }}">try again</a>.</h2>
+				<h1 class="recuperar">Se ha enviado un correo electrónico que contiene un enlace en el que puede hacer clic para restablecer su contraseña. Este enlace caducará en
+					<b>{{ tokenLifetime|date('g') }}
+					hour(s).</b></h1>
+				<h2 class="sub-recuperar">Si no recibe un correo electrónico, consulte su carpeta de correo no deseado o
+					<a href="{{ path('app_forgot_password_request') }}"><b>intente nuevamente</b></a>.</h2>
 
 			</section>
 		</div>

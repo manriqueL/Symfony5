@@ -47,9 +47,11 @@
 					<form method="post">
 						
 						<div>
+							<span>Usuario:</span>
 							<input type="text" value="{{ last_username }}" name="username" id="inputText" class="form-control" placeholder="Nombre de Usuario" required autofocus>
 						</div>
 						<div>
+							<span>Contraseña:</span>
 							<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
 							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 						</div>

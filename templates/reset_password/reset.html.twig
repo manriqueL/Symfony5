@@ -6,8 +6,14 @@
 {% endblock %}
 {% block body %}
 	<div class="login_wrapper">
+			<div class="login_form_header">
+				<div class="isologotipo">
+					<h2>SIDI - TSJ La Rioja</h2>
+				</div>
+			</div>
 		<div class="animate form login_form">
 			<section class="login_content">
+			
 				<h1>Reset your password</h1>
 				{{ form_start(resetForm) }}
 				{{ form_row(resetForm.plainPassword) }}
