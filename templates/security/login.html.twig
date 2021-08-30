@@ -28,6 +28,7 @@
 	href="{{ asset('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
 	<!-- Custom Theme Style -->
 	<link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('build/css/custom.css') }}" rel="stylesheet">
 {% endblock %}
 {% block bodyclass %}class="login"
 {% endblock %}
@@ -36,23 +37,30 @@
 		<a class="hiddenanchor" id="signup"></a>
 		<a class="hiddenanchor" id="signin"></a>
 		<div class="login_wrapper">
+			<div class="login_form_header">
+				<div class="isologotipo">
+					<h2>SIDI - TSJ La Rioja</h2>
+				</div>
+			</div>
 			<div class="animate form login_form">
 				<section class="login_content">
 					<form method="post">
-						<h1>ADMIN PANEL</h1>
+						
 						<div>
-							<input type="text" value="{{ last_username }}" name="username" id="inputText" class="form-control" placeholder="Username" required autofocus>
+							<input type="text" value="{{ last_username }}" name="username" id="inputText" class="form-control" placeholder="Nombre de Usuario" required autofocus>
 						</div>
 						<div>
-							<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+							<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
 							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 						</div>
 						<div>
-							<input type="checkbox" class="" name="_remember_me"><span>Remember me</span>
+							<input type="checkbox" class="" name="_remember_me"><span>&nbsp;Recordarme</span>
 						</div>
 						<div>
-							<button class="btn btn-success submit" href="index.html">Log in</button>
-							<a class="reset_pass" href="{{path('app_forgot_password_request')}}">Lost your password?</a>
+							<a class="reset_pass" href="{{path('app_forgot_password_request')}}">¿Olvidó su contraseña?</a>
+						</div>
+						<div>
+							<button class="btn btn-success-full submit" href="index.html">Ingresar</button>
 						</div>
 
 						<div class="separator">
@@ -64,15 +72,11 @@
 							</p> #}
 
 							<div class="clearfix"></div>
-							<br/>
-
+						
 							<div>
-								<h1>
-									<i class="fa fa-paw"></i>
-									ADMIN PANEL</h1>
+								
 								<p>©{{ "now"|date("Y") }}
-									{{ "backend.login.all_rights"|trans }}
-									<a target="_blank" href="//example.com">example.com<a/></p>
+									Tribunal Superior de Justicia - Función Judicial de la Provincia de La Rioja								
 								</p>
 							</div>
 						</div>
@@ -84,7 +88,7 @@
 					</form>
 				</section>
 			</div>
-			<div id="register" class="animate form registration_form">
+			{# <div id="register" class="animate form registration_form">
 				<section class="login_content">
 					<form>
 						<h1>
@@ -125,7 +129,7 @@
 						</div>
 					</form>
 				</section>
-			</div>
+			</div> #}
 		</div>
 	</div>
 {% endblock %}
