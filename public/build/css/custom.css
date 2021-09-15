@@ -5076,3 +5076,8 @@ span.current{
 .td-cursor{
   cursor:pointer;
 }
+.alert-suspended{
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 1.2em;
+}

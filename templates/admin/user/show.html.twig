@@ -16,6 +16,13 @@
             </a>
             <div class="clearfix"></div>
         </div>
+
+        {% if user.suspended %}
+          <div class="alert alert-danger" role="alert">
+            <div class="alert-suspended">El usuario se encuentra suspendido.</div>
+          </div>
+        {% endif %}
+
         <div class="x_content">
           <div class="row">
             <div class="table-responsive">
