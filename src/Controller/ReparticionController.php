@@ -11,17 +11,21 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Form\reparticion\FiltroType;
 
 class ReparticionController extends BaseController
 {
 
     private $reparticionRepository;
-        private $entityManager;
+    private $entityManager;
+    private $paginator;
 
-    public function __construct(ReparticionRepository $reparticionRepository,EntityManagerInterface $entityManager)
+    public function __construct(ReparticionRepository $reparticionRepository,EntityManagerInterface $entityManager, PaginatorInterface $paginator)
     {
         $this->reparticionRepository = $reparticionRepository;
         $this->entityManager = $entityManager;
+        $this->paginator = $paginator;
     }
 
 
@@ -29,9 +33,23 @@ class ReparticionController extends BaseController
      * @Route("/admin/reparticion", name="index_reparticion")
      * @IsGranted("ROLE_SUPERUSER")
      */
-    public function index(){
-        $reparticion = $this->reparticionRepository->findAll();
-        return $this->render("admin/reparticion/index.html.twig",["reparticiones"=>$reparticion]);
+    public function index(Request $request){
+
+        $formFiltro = $this->createForm(FiltroType::class);
+        if ($request->query->get($formFiltro->getName())) {
+            $formFiltro->handleRequest($request);
+        }
+        $objOptions = $formFiltro->getData();
+        
+        $pagination = $this->paginator->paginate(
+            $this->reparticionRepository->findForActionIndex($objOptions),
+            $request->query->get('page', 1),
+            12
+        );
+        return $this->render("admin/reparticion/index.html.twig",[
+            "pagination"=>$pagination,
+            'formFiltro' => $formFiltro->createView()
+        ]);
     }
 
     /**

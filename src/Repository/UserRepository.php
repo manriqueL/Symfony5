@@ -40,34 +40,32 @@ class UserRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findForActionIndex($filtro = [])
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+      $qb = $this->createQueryBuilder('e')
+            ->orderBy("e.id", "ASC");
 
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+      if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
+        $qb
+          ->andWhere("e.nombre LIKE :nombre")
+          ->setParameter("nombre", '%'.$filtro["nombre"].'%')
         ;
+      }
+      if(isset($filtro["username"]) && $filtro["username"] != '') {
+        $qb
+          ->andWhere("e.username LIKE :username")
+          ->setParameter("username", '%'.$filtro["username"].'%')
+        ;
+      }
+      if(isset($filtro["email"]) && $filtro["email"] != '') {
+        $qb
+          ->andWhere("e.email LIKE :email")
+          ->setParameter("email", '%'.$filtro["email"].'%')
+        ;
+      }
+
+      return $qb;
     }
-    */
 
     public function delete(User $user){
         /* $user->setDeleted(true);

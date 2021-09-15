@@ -16,40 +16,100 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
+
+                    {{ include('admin/user/_filtro.html.twig', {'form': formFiltro}) }}
+
                     <div class="x_content">
                         <div class="row">
                             <div class="table-responsive">
-                                <table id="example" class="display table table-striped table-bordered dataminetables" >
+                                <table id="example" class="display table table-striped table-bordered" >
+                                    {# Títulos de tabla #}
                                     <thead>
-                                        <th class="btn-table-width">Id</th>
-                                        <th>Usuario</th>
-										<th>Email</th>
-										<th>Nombre</th>
-                                        <th class="btn-table-width">Acciones</th>
+                                        {# ID #}
+                                        <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;" width="100px">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                {{ knp_pagination_sortable(pagination, 'ID', 'e.id') }}
+                                                {% if pagination.getSort == 'e.id' and pagination.getDirection == 'asc' %}
+                                                    <i class="fa fa-level-up"></i>
+                                                {% elseif pagination.getSort == 'e.id' and pagination.getDirection == 'desc' %}
+                                                    <i class="fa fa-level-down"></i>
+                                                {% endif %}
+                                            </div>
+                                        </th>
+                                        {# Nombre #}
+                                        <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                {{ knp_pagination_sortable(pagination, 'Nombre', 'e.nombre') }}
+                                                {% if pagination.getSort == 'e.nombre' and pagination.getDirection == 'asc' %}
+                                                    <i class="fa fa-level-up"></i>
+                                                {% elseif pagination.getSort == 'e.nombre' and pagination.getDirection == 'desc' %}
+                                                    <i class="fa fa-level-down"></i>
+                                                {% endif %}
+                                            </div>
+                                        </th>
+                                        {# Username #}
+                                        <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                {{ knp_pagination_sortable(pagination, 'Usuario', 'e.username') }}
+                                                {% if pagination.getSort == 'e.username' and pagination.getDirection == 'asc' %}
+                                                    <i class="fa fa-level-up"></i>
+                                                {% elseif pagination.getSort == 'e.username' and pagination.getDirection == 'desc' %}
+                                                    <i class="fa fa-level-down"></i>
+                                                {% endif %}
+                                            </div>
+                                        </th>
+                                        {# Email #}
+                                        <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                {{ knp_pagination_sortable(pagination, 'Email', 'e.email') }}
+                                                {% if pagination.getSort == 'e.email' and pagination.getDirection == 'asc' %}
+                                                    <i class="fa fa-level-up"></i>
+                                                {% elseif pagination.getSort == 'e.email' and pagination.getDirection == 'desc' %}
+                                                    <i class="fa fa-level-down"></i>
+                                                {% endif %}
+                                            </div>
+                                        </th>
+                                        <th class="btn-table-width" style="cursor: auto;">
+                                            Acciones
+                                        </th>
                                     </thead>
+                                    {# FIN Títulos de tabla #}
+
                                     <tbody>
-                                        {% for user in users %}
+                                        {% for user in pagination %}
                                             <tr>
-                                                <td class="align-middle">{{ user.id }}</td>
-                                                <td class="align-middle">{{ user.username }}</td>
-												<td class="align-middle">{{ user.email }}</td>
-												<td class="align-middle">{{ user.nombre }}</td>
+                                                <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">{{ user.id }}</td>
+                                                <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">{{ user.nombre }}</td>
+                                                <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">{{ user.username }}</td>
+                                                <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">{{ user.email }}</td>
                                                 <td class="btn-cell-table align-middle">
-                                                    <a class="btn btn-primary btn-sm btn-table-margin" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
+                                                    <a class="btn btn-primary btn-sm btn-table-margin mt-1 mb-1" alt="Editar" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a class="btn btn-danger btn-sm disable-btn del-link btn-table-margin" title="Eliminar registro" href="javascript:void(0)" data-toggle="modal" data-target="#modalEliminar{{user.id}}">
+                                                    <a class="btn btn-danger btn-sm btn-table-margin mt-1 mb-1" title="Eliminar registro" href="javascript:void(0)" data-toggle="modal" data-target="#modalEliminar{{user.id}}">
                                                         <i class="fa fa-trash"></i>
-                                                    </a>
-                                                    <a class="btn btn-success btn-sm btn-table-margin" href="{{ path('show_user',{"id":user.id}) }}">
-                                                        <i class="fa fa-search"></i>
                                                     </a>
                                                 </td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div> 
+
+                            {# Pagination #}
+                            <div class="row justify-content-between m-0 w-100 mt-2">
+                                <div class="col-4">
+                                    <div class="d-flex mb-2 mb-md-0 d-inline-flex">
+                                        {{ pagination.getTotalItemCount }} {{ pagination.getTotalItemCount == 1 ? " registro" : " registros" }} en total
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <div class="d-inline-flex align-items-end">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {# END Pagination #}                           
                         </div>
                     </div>
                 </div>
@@ -59,7 +119,7 @@
 {% endblock %}
 
 {% block modal_content %}
-  {% for user in users %}
+  {% for user in pagination %}
     <div id="modalEliminar{{ user.id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">

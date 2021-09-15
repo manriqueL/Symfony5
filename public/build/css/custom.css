@@ -5023,9 +5023,16 @@ ul.notifications {
 .btn-table-width{
   width: 0px;
 }
+a{
+  color: black;
+}
+.btn-table-margin{
+  margin-right: 3px;
+  margin-left: 3px;
+}
 .title-page{
-  color: #3a444e;
-  font-size: 20px;
+  color: black;
+  font-size: 23px;
 }
 .btn-success-custom{
     color: #28a745 !important;
@@ -5038,4 +5045,34 @@ ul.notifications {
 }
 .modal-title{
   color: black;
+}
+span.page, span.next, span.last, span.previous, span.first{
+  margin-left: 5px;
+  margin-right: 5px;  
+}
+span.page a, span.next, span.last, span.previous, span.first{
+  color: #73879C;
+}
+span.current{
+  margin-left: 5px;
+  margin-right: 5px;
+  color: black;
+}
+.filtro .accordion-header{
+  background-color: #f3f5fa;
+  box-shadow: inset 0 0 5px hsl(0deg 0% 80% / 68%);
+  padding: 5px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.icon-text{
+  margin-top: -1px;
+  font-size: 1.125rem;
+}
+.size-id{
+  width: 80px;
+}
+.td-cursor{
+  cursor:pointer;
 }

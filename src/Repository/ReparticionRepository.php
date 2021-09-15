@@ -17,6 +17,21 @@ class ReparticionRepository extends ServiceEntityRepository
         $this->entityManager = $entityManager;
     }
 
+    public function findForActionIndex($filtro = [])
+    {
+      $qb = $this->createQueryBuilder('e')
+            ->orderBy("e.id", "ASC");
+
+      if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
+        $qb
+          ->andWhere("e.nombre LIKE :nombre")
+          ->setParameter("nombre", '%'.$filtro["nombre"].'%')
+        ;
+      }
+
+      return $qb;
+    }
+
     public function delete(Reparticion $reparticion){
         //$reparticion->setDeleted(true);
         try {

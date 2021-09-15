@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Form\user\FiltroType;
 
 class UserController extends BaseController
 {
@@ -26,22 +28,39 @@ class UserController extends BaseController
     private $entityManager;
     private $roleRepository;
 
-    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    private $paginator;
+
+    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager,
+                                PaginatorInterface $paginator)
     {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $entityManager;
         $this->roleRepository = $roleRepository;
+        $this->paginator = $paginator;
     }
 
     /**
      * @Route("/admin/user",name="app_admin_users")
      * @IsGranted("ROLE_SUPERUSER")
      */
-    public function users()
+    public function users(Request $request)
     {
-        $users = $this->userRepository->findAll();
-        return $this->render("admin/user/user.html.twig", ["users" => $users]);
+        $formFiltro = $this->createForm(FiltroType::class);
+        if ($request->query->get($formFiltro->getName())) {
+            $formFiltro->handleRequest($request);
+        }
+        $objOptions = $formFiltro->getData();
+        
+        $pagination = $this->paginator->paginate(
+            $this->userRepository->findForActionIndex($objOptions),
+            $request->query->get('page', 1),
+            12
+        );
+        return $this->render("admin/user/user.html.twig", [
+            "pagination"=>$pagination,
+            'formFiltro' => $formFiltro->createView()
+        ]);
     }
 
     /**
