@@ -3,9 +3,6 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: 'es'
-    app_locales: es|en|fr
 
 services:
     # default configuration for services in *this* file
@@ -34,4 +31,4 @@ services:
 
 
     App\EventSubscriber\RedirectToLocaleSubscriber:
-        arguments: ['@router', '%app_locales%', '%locale%']
+        arguments: ['@router', kernel.default_locale]

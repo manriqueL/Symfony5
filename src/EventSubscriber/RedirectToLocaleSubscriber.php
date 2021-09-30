@@ -76,10 +76,12 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event)
     {
-        $request = $event->getRequest();
+        return;
+        /* $request = $event->getRequest();
 
+        
         // Ignore sub-requests and all URLs but the homepage
-        if ('/admin' !== $request->getPathInfo()) {
+        if ('/' !== $request->getPathInfo()) {
             return;
         }
 
@@ -91,7 +93,7 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
 
         $preferredLanguage = $request->getPreferredLanguage($this->locales);
 
-        $response = new RedirectResponse($this->urlGenerator->generate('app_admin_index', ['_locale' => $preferredLanguage]));
-        $event->setResponse($response);
+        $response = new RedirectResponse($this->urlGenerator->generate('inicio_index'));
+        $event->setResponse($response); */
     }
 }
