@@ -85,84 +85,80 @@
     </div>
     <!-- /top navigation -->
 
-    {# TO DO MODIFICAR MESSAGE FLASH  #}
     <!-- page content -->
     <div class="right_col" role="main">
+        {% block alertsection %}
+            <div class="row">
+                {# Mensajes de ERROR #}
+                {% for message in app.flashes("error") %}
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        {{message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes("error-nuevo") %}
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        Ocurrió un <strong>problema al crear</strong> el registro.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes("error-eliminado") %}            
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        Ocurrió un <strong>problema al eliminar</strong> el registro.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes("error-modificado") %}            
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        Ocurrió un <strong>problema al modificar</strong> el registro.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
 
-        {# Mensajes de ERROR #}
-        {% for message in app.flashes("error") %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h5>{{message}}</h5>
+                {# Mensajes de SUCCESS #}
+                {% for message in app.flashes("success") %}
+                    <div class="alert alert-success alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        {{message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes("success-nuevo") %}
+                    <div class="alert alert-success alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        El registro fue <strong>creado correctamente.</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes("success-eliminado") %}
+                    <div class="alert alert-success alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        El registro fue <strong>eliminado correctamente.</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes("success-modificado") %}
+                    <div class="alert alert-success alert-dismissible" role="alert" style="width: 100%; font-size: 1.2em;">
+                        El registro fue <strong>modificado correctamente.</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-        {% for message in app.flashes("error-nuevo") %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="alert-heading">Error al crear!</h4>
-                <h5>Ocurrió un problema al crear el registro.</h5>
-            </div>
-        {% endfor %}
-        {% for message in app.flashes("error-eliminado") %}            
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="alert-heading">Error al eliminar!</h4>
-                <h5>Ocurrió un problema al eliminar el registro.</h5>
-            </div>
-        {% endfor %}
-        {% for message in app.flashes("error-modificado") %}            
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="alert-heading">Error al modificar!</h4>
-                <h5>Ocurrió un problema al modificar el registro.</h5>
-            </div>
-        {% endfor %}
-
-        {# Mensajes de SUCCESS #}
-        {% for message in app.flashes("success") %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h5>{{message}}</h5>
-            </div>
-        {% endfor %}
-        {% for message in app.flashes("success-nuevo") %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="alert-heading">Creado!</h4>
-                <h5>El registro fue creado correctamente.</h5>
-            </div>
-        {% endfor %}
-        {% for message in app.flashes("success-eliminado") %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="alert-heading">Eliminado!</h4>                
-                <h5>El registro fue eliminado correctamente.</h5>
-            </div>
-        {% endfor %}
-        {% for message in app.flashes("success-modificado") %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="alert-heading">Modificado!</h4>
-                <h5>El registro fue modificado correctamente.</h5>
-            </div>
-        {% endfor %}
-        {% block contenpage %}{% endblock %}
+            {% block contenpage %}{% endblock %}            
+        {% endblock %}
     </div>
     <!-- /page content -->
 {% endblock %}
