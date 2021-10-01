@@ -11,14 +11,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
                 <div class="profile_pic">
-                    {# {% if is_granted('ROLE_SUPERUSER') %}
-                    <img src="{{ app.user.avatarUrl(50) }}" alt="..." class="img-circle profile_img">
-                    {% endif %} #}
                 </div>
-                {# <div class="profile_info">
-                    <span>{{ "backend.global.welcome"|trans }},</span>
-                    <h2>{{ app.user.apellido ~ app.user.nombre }}</h2>
-                </div> #}
             </div>
             <!-- /menu profile quick info -->
 
@@ -28,19 +21,19 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu ">
                 <div class="menu_section">
                     <ul class="nav side-menu">
-                        <li><a href="{{ path('inicio_index') }}"><i class="fa fa-home"></i> {{ "backend.menu.home"|trans }}</a>
+                        <li><a href="{{ path('inicio_index') }}"><i class="fa fa-home"></i> Home</a>
                         </li>
                         {% if is_granted("ROLE_SUPERUSER") %}
-                        <li><a><i class="fa fa-user"></i> {{ "backend.menu.user"|trans }} <span class="fa fa-chevron-down"></span></a>
+                        <li><a><i class="fa fa-user"></i> Usuario <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="{{ path('app_admin_users') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                                <li><a href="{{ path('app_admin_users') }}">Administrar</a></li>
                             </ul>
                         </li>
                         {% endif %}
                         {% if is_granted("ROLE_WRITER") %}
                         <li><a><i class="fa fa-bookmark"></i>Reparticiones <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="{{ path('index_reparticion') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                                <li><a href="{{ path('index_reparticion') }}">Administrar</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-clipboard"></i> Ejemplo <span class="fa fa-chevron-down"></span></a>
@@ -75,8 +68,8 @@
                             {{ app.user.apellido ~ "," ~ app.user.nombre }}
                         </a>
                         <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"  href="{{ path('app_admin_changepswd') }}"><i class="fa fa-key pull-right"></i>{{ "backend.global.change_my_password"|trans }}</a>
-                            <a class="dropdown-item"  href="{{ path('app_logout') }}"><i class="fa fa-sign-out pull-right"></i>{{ "backend.global.logout"|trans }}</a>
+                            <a class="dropdown-item"  href="{{ path('app_admin_changepswd') }}"><i class="fa fa-key pull-right"></i>Cambiar contraseña</a>
+                            <a class="dropdown-item"  href="{{ path('app_logout') }}"><i class="fa fa-sign-out pull-right"></i>Salir</a>
                         </div>
                     </li>
                 </ul>
