@@ -239,48 +239,48 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
 
-    public function getDni(): ?int
+    public function getDni()
     {
         return $this->dni;
     }
 
-    public function setDni(int $dni): self
+    public function setDni($dni)
     {
         $this->dni = $dni;
 
         return $this;
     }
 
-    public function getCuil(): ?int
+    public function getCuil()
     {
         return $this->cuil;
     }
 
-    public function setCuil(int $cuil): self
+    public function setCuil($cuil)
     {
         $this->cuil = $cuil;
 
         return $this;
     }
 
-    public function getTelefono(): ?int
+    public function getTelefono()
     {
         return $this->telefono;
     }
 
-    public function setTelefono(int $telefono): self
+    public function setTelefono($telefono)
     {
         $this->telefono = $telefono;
 
         return $this;
     }
 
-    public function getDireccion(): ?string
+    public function getDireccion()
     {
         return $this->direccion;
     }
 
-    public function setDireccion(string $direccion): self
+    public function setDireccion($direccion)
     {
         $this->direccion = $direccion;
 

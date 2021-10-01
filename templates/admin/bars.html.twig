@@ -21,30 +21,37 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu ">
                 <div class="menu_section">
                     <ul class="nav side-menu">
-                        <li><a href="{{ path('inicio_index') }}"><i class="fa fa-home"></i> Home</a>
+
+                        {# MENÚ HOME #}
+                        <li>
+                            <a href="{{ path('inicio_index') }}">
+                                <i class="fa fa-home"></i> Home
+                            </a>
                         </li>
-                        {% if is_granted("ROLE_SUPERUSER") %}
-                        <li><a><i class="fa fa-user"></i> Usuario <span class="fa fa-chevron-down"></span></a>
+
+                        {# MENÚ DE EJEMPLO #}
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-book"></i> Ejemplo
+                            </a>
+                        </li>
+
+                        {# MENÚ DE ADMINISTRACIÓN #}
+                        <li><a><i class="fa fa-gear"></i>Administrar <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="{{ path('app_admin_users') }}">Administrar</a></li>
+                                <li>
+                                    <a href="{{ path('app_admin_users') }}">
+                                        <i class="fa fa-user"></i>Usuarios
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('index_reparticion') }}">
+                                        <i class="fa fa-bookmark"></i>Reparticiones
+                                    </a>
+                                </li>
                             </ul>
                         </li>
-                        {% endif %}
-                        {% if is_granted("ROLE_WRITER") %}
-                        <li><a><i class="fa fa-bookmark"></i>Reparticiones <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li><a href="{{ path('index_reparticion') }}">Administrar</a></li>
-                            </ul>
-                        </li>
-                        <li><a><i class="fa fa-clipboard"></i> Ejemplo <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li><a href="#">Ejemplo 1</a></li>
-                                {% if is_granted("ROLE_EDITORIAL") %}
-                                    <li><a href="#">Ejemplo 2</a></li>
-                                {% endif %}
-                            </ul>
-                        </li>
-                        {% endif %}
+
                     </ul>
                 </div>
 

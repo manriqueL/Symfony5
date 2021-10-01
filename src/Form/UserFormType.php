@@ -23,7 +23,9 @@ class UserFormType extends AbstractType
         $this->translator = $options['translator'];
 
         $builder
-            ->add("username", TextType::class, ["label" => $this->translator->trans('backend.user.username')])
+            ->add("username", TextType::class, [
+                "label" => "Usuario"
+            ])
             ->add("email", EmailType::class)
             ->add("nombre", TextType::class, [
                 "label" => "Nombre",
@@ -39,17 +41,21 @@ class UserFormType extends AbstractType
                     new NotBlank(["message" => "El campo no puede estar vacío"])
                 ]
             ])
-            ->add("dni", NumberType::class, [
-                "label" => "DNI"
+            ->add("dni", null, [
+                "label" => "DNI",
+                "required" => false,
             ])
-            ->add("cuil", NumberType::class, [
-                "label" => "CUIL"
+            ->add("cuil", TextType::class, [
+                "label" => "CUIL",
+                "required" => false,
             ])
-            ->add("telefono", NumberType::class, [
-                "label" => "Teléfono"
+            ->add("telefono", TextType::class, [
+                "label" => "Teléfono",
+                "required" => false,
             ])
             ->add("direccion", TextType::class, [
-                "label" => "Dirección"
+                "label" => "Dirección",
+                "required" => false,
             ])
             ->add("justpassword", TextType::class, [
                 "label" => $this->translator->trans('backend.user.password'),
