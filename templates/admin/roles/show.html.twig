@@ -7,7 +7,7 @@
     <div class="col-md-12">
       <div class="x_panel">
         <div class="x_title">
-            <h2 class="title-page">Rol ID: {{ rol.id }}</h2>            
+            <h2 class="title-page">Rol: {{ rol.roleName }}</h2>            
             <a class="btn btn-primary btn-sm float-right" style="margin-right:15px;" href="{{ path('index_roles') }}">
               <i class="fa fa-mail-reply"></i> &nbsp; Volver al listado
             </a>
@@ -23,12 +23,46 @@
                 <div class="col-md ml-md-auto text-md-right">                          
                   <div class="row text-left">
                     <table class="table">
-                      <tbody>
-                        {# Nombre #}
+                      <tbody>                        
                         <tr>
-                          <th width="150" class="text-right">Nombre:</th>
-                          <td>{{ rol.roleName }}</td>
-                        </tr>                        
+                          {# PERMISOS DE ADMINISTRACIÓN #}
+                          <th>
+                            <div class="x_panel">
+                              <a class="collapse-link">
+                              <div class="x_title">
+                                  <h2>Permisos de Administración</h2>
+                                  <ul class="nav navbar-right panel_toolbox">
+                                    <li><i class="fa fa-chevron-up"></i></li>
+                                  </ul>
+                                <div class="clearfix"></div>
+                              </div>
+                              </a> 
+                              <div class="x_content">
+                                <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+  <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+</div>
+                              </div>
+                            </div>
+                          </th>
+                          {# PERMISOS DE ADMINISTRACIÓN #}
+                          <th>
+                            <div class="x_panel">
+                              <a class="collapse-link">
+                              <div class="x_title">
+                                  <h2>Permisos de Administración</h2>
+                                  <ul class="nav navbar-right panel_toolbox">
+                                    <li><i class="fa fa-chevron-up"></i></li>
+                                  </ul>
+                                <div class="clearfix"></div>
+                              </div>
+                              </a> 
+                              <div class="x_content">
+                                <p>texto</p>
+                              </div>
+                            </div>
+                          </th>
+                        </tr>
                       </tbody>
                     </table>   
                   </div>
