@@ -4,47 +4,41 @@ namespace App\Repository;
 
 use App\Entity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @method Role|null find($id, $lockMode = null, $lockVersion = null)
- * @method Role|null findOneBy(array $criteria, array $orderBy = null)
- * @method Role[]    findAll()
- * @method Role[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class RoleRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $entityManager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Role::class);
+        $this->entityManager = $entityManager;
     }
 
-    // /**
-    //  * @return Role[] Returns an array of Role objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findForActionIndex($filtro = [])
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+      $qb = $this->createQueryBuilder('e')
+            ->orderBy("e.id", "ASC");
 
-    /*
-    public function findOneBySomeField($value): ?Role
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+      if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
+        $qb
+          ->andWhere("e.roleName LIKE :nombre")
+          ->setParameter("nombre", '%'.$filtro["nombre"].'%')
         ;
+      }
+
+      return $qb;
     }
-    */
+
+    public function delete(Role $role){
+        try {
+            $this->entityManager->remove($role);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
 }

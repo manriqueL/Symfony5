@@ -1,0 +1,105 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+    <div class="">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2 class="title-page">Lista de roles</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a href="{{ path('new_role') }}" class="btn btn-success-custom">
+                                    <i class="fa fa-plus"></i> &nbsp; Nuevo
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    {{ include('admin/roles/_filtro.html.twig', {'form': formFiltro}) }}
+
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table id="example" class="display table table-striped table-bordered" >
+                                    {# Títulos de tabla #}
+                                    <thead>
+                                        <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;" width="100px">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                {{ knp_pagination_sortable(pagination, 'ID', 'e.id') }}
+                                                {% if pagination.getSort == 'e.id' and pagination.getDirection == 'asc' %}
+                                                    <i class="fa fa-level-up"></i>
+                                                {% elseif pagination.getSort == 'e.id' and pagination.getDirection == 'desc' %}
+                                                    <i class="fa fa-level-down"></i>
+                                                {% endif %}
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                {{ knp_pagination_sortable(pagination, 'Nombre', 'e.roleName') }}
+                                                {% if pagination.getSort == 'e.roleName' and pagination.getDirection == 'asc' %}
+                                                    <i class="fa fa-level-up"></i>
+                                                {% elseif pagination.getSort == 'e.roleName' and pagination.getDirection == 'desc' %}
+                                                    <i class="fa fa-level-down"></i>
+                                                {% endif %}
+                                            </div>
+                                        </th>
+                                        <th class="btn-table-width" style="cursor: auto;">
+                                            Acciones
+                                        </th>
+                                    </thead>
+                                    {# FIN Títulos de tabla #}
+                                    
+                                    <tbody>
+                                        {% for rol in pagination %}
+                                            <tr>
+                                                <td class="align-middle td-cursor" onClick="window.location='{{ path('show_role',{"id":rol.id}) }}'">{{ rol.id }}</td>
+                                                <td class="align-middle td-cursor" onClick="window.location='{{ path('show_role',{"id":rol.id}) }}'">{{ rol.roleName }}</td>
+                                                <td class="btn-cell-table align-middle">
+                                                    <a class="btn btn-primary btn-sm btn-table-margin mt-1 mb-1" alt="Editar" href="{{ path('edit_role',{"id":rol.id}) }}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger btn-sm btn-table-margin mt-1 mb-1" title="Eliminar registro" href="javascript:void(0)" data-toggle="modal" data-target="#modalEliminar{{rol.id}}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {# Pagination #}
+                            <div class="row justify-content-between m-0 w-100 mt-2">
+                                <div class="col-4">
+                                    <div class="d-flex mb-2 mb-md-0 d-inline-flex">
+                                        {{ pagination.getTotalItemCount }} {{ pagination.getTotalItemCount == 1 ? " registro" : " registros" }} en total
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <div class="d-inline-flex align-items-end">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {# END Pagination #}
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_content %}
+  {% for rol in pagination %}
+    <div id="modalEliminar{{ rol.id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          {{ include('admin/roles/_delete_form.html.twig', {'id': rol.id }) }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock modal_content %}

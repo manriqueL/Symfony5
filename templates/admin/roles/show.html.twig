@@ -1,0 +1,45 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block contenpage %}
+
+<div class="">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="x_panel">
+        <div class="x_title">
+            <h2 class="title-page">Rol ID: {{ rol.id }}</h2>            
+            <a class="btn btn-primary btn-sm float-right" style="margin-right:15px;" href="{{ path('index_roles') }}">
+              <i class="fa fa-mail-reply"></i> &nbsp; Volver al listado
+            </a>
+            <a class="btn btn-primary btn-sm float-right" href="{{ path('edit_role',{"id":rol.id}) }}">
+              <i class="fa fa-edit"></i> &nbsp; Editar
+            </a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="table-responsive">
+              <div class="row text-left" style="margin:0 0 20px 0;">               
+                <div class="col-md ml-md-auto text-md-right">                          
+                  <div class="row text-left">
+                    <table class="table">
+                      <tbody>
+                        {# Nombre #}
+                        <tr>
+                          <th width="150" class="text-right">Nombre:</th>
+                          <td>{{ rol.roleName }}</td>
+                        </tr>                        
+                      </tbody>
+                    </table>   
+                  </div>
+                </div>
+              </div>    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock contenpage %}
