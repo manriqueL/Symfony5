@@ -29,7 +29,6 @@ class PermisoController extends BaseController
 
     /**
      * @Route("/permiso/new/{id}", name="new_permiso", requirements={"id":"\d+"})
-     * @IsGranted("ROLES_CREAR")
      */
     public function new(Request $request, Role $role){
 
@@ -56,23 +55,6 @@ class PermisoController extends BaseController
             }
         }
         return $this->redirectToRoute('show_role', ["id"=> $role->getId()]); 
-    }
-
-
-    /**
-     * @Route("/permiso/delete/{id}",name="delete_permiso", requirements={"id":"\d+"})
-     * @IsGranted("ROLES_ELIMINAR")
-     */
-    public function delete(Request $request, Permiso $permiso){
-        /* if ($this->isCsrfTokenValid('delete'.$rol->getId(), $request->request->get('_token'))) {
-            $resp = $this->rolesRepository->delete($rol);
-            if($resp === true){
-                $this->addFlash("success-eliminado","");
-            }else{
-                $this->addFlash("error-eliminado","");
-            }
-        } */
-        return $this->redirectToRoute('index_roles');          
     }
     
 }
