@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +23,17 @@ class Role
      * @ORM\Column(type="string", length=100)
      */
     private $roleName;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Permiso::class, mappedBy="role")
+     */
+    private $permisos;
+
+    public function __construct()
+    {
+        $this->permisos = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -41,5 +54,36 @@ class Role
 
     public function __toString() {
         return $this->roleName;
+    }
+
+    /**
+     * @return Collection|Permiso[]
+     */
+    public function getPermisos(): Collection
+    {
+        return $this->permisos;
+    }
+
+    public function addPermiso(Permiso $permiso): self
+    {
+        if (!$this->permisos->contains($permiso)) {
+            $this->permisos[] = $permiso;
+            $permiso->setRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermiso(Permiso $permiso): self
+    {
+        if ($this->permisos->contains($permiso)) {
+            $this->permisos->removeElement($permiso);
+            // set the owning side to null (unless already changed)
+            if ($permiso->getRole() === $this) {
+                $permiso->setRole(null);
+            }
+        }
+
+        return $this;
     }
 }

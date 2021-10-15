@@ -13,6 +13,7 @@ class InicioController extends AbstractController
 
     /**
      * @Route("/",name="inicio_index")
+     * @IsGranted("VER_INICIO")
      */
     public function index(){
         if($this->getUser()){

@@ -20,6 +20,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Form\user\FiltroType;
 
+/**
+ * @Route("/admin/user")
+ */
 class UserController extends BaseController
 {
     private $userRepository;
@@ -41,8 +44,8 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user",name="app_admin_users")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/",name="app_admin_users")
+     * @IsGranted("USERS_VER")
      */
     public function users(Request $request)
     {
@@ -64,8 +67,8 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/{id}", name="show_user", requirements={"id":"\d+"}))
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/{id}", name="show_user", requirements={"id":"\d+"}))
+     * @IsGranted("USERS_VER")
      */
     public function show(Request $request, User $user)
     {    
@@ -75,8 +78,8 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/new", name="app_admin_new_user")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/new", name="app_admin_new_user")
+     * @IsGranted("USERS_CREAR")
      */
     public function newUser(Request $request, TranslatorInterface $translator)
     {
@@ -99,8 +102,8 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/edit/{id}", name="app_admin_edit_user", requirements={"id":"\d+"}))
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/edit/{id}", name="app_admin_edit_user", requirements={"id":"\d+"}))
+     * @IsGranted("USERS_EDITAR")
      */
     public function editUser(User $user, Request $request, TranslatorInterface $translator)
     {
@@ -125,8 +128,8 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/changevalidite/{id}",name="app_admin_changevalidite_user",methods={"post"}, requirements={"id":"\d+"}))
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/changevalidite/{id}",name="app_admin_changevalidite_user",methods={"post"}, requirements={"id":"\d+"}))
+     * @IsGranted("USERS_ACTIVAR")
      */
     public function activate(User $user)
     {
@@ -135,8 +138,8 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/delete/{id}",name="app_admin_delete_user", requirements={"id":"\d+"}))
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/delete/{id}",name="app_admin_delete_user", requirements={"id":"\d+"}))
+     * @IsGranted("USERS_ELIMINAR")
      */
     public function delete(Request $request, User $user)
     {
@@ -152,8 +155,8 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/admin/user/changePassword",name="app_admin_changepswd")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/changePassword",name="app_admin_changepswd")
+     * @IsGranted("USERS_PASSWORD")
      */
     public function changePswd(Request $request, TranslatorInterface $translator)
     {

@@ -32,6 +32,16 @@ class RoleRepository extends ServiceEntityRepository
       return $qb;
     }
 
+    public function findByName($nombre)
+    {
+      $qb = $this->createQueryBuilder('e')
+        ->andWhere("e.roleName = :nombre")
+        ->setParameter("nombre", $nombre)
+      ;
+
+      return $qb->getQuery()->getOneOrNullResult();
+    }
+
     public function delete(Role $role){
         try {
             $this->entityManager->remove($role);

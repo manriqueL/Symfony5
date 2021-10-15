@@ -14,6 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Form\roles\FiltroType;
 
+/**
+ * @Route("/admin")
+ */
 class RolesController extends BaseController
 {
 
@@ -30,8 +33,8 @@ class RolesController extends BaseController
 
 
     /**
-     * @Route("/admin/roles", name="index_roles")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/roles", name="index_roles")
+     * @IsGranted("ROLES_VER")
      */
     public function index(Request $request){
 
@@ -53,8 +56,8 @@ class RolesController extends BaseController
     }
 
     /**
-     * @Route("/admin/roles/{id}", name="show_role", requirements={"id":"\d+"})
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/roles/{id}", name="show_role", requirements={"id":"\d+"})
+     * @IsGranted("ROLES_VER")
      */
     public function show(Request $request, Role $rol)
     {    
@@ -64,8 +67,8 @@ class RolesController extends BaseController
     }
 
     /**
-     * @Route("/admin/roles/new",name="new_role")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/roles/new",name="new_role")
+     * @IsGranted("ROLES_CREAR")
      */
     public function new(Request $request){
         $form = $this->createForm(RoleFormType::class);
@@ -83,8 +86,8 @@ class RolesController extends BaseController
     }
 
     /**
-     * @Route("/admin/roles/edit/{id}",name="edit_role", requirements={"id":"\d+"})
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/roles/edit/{id}",name="edit_role", requirements={"id":"\d+"})
+     * @IsGranted("ROLES_EDITAR")
      */
     public function edit(Role $rol, Request $request){
         $form = $this->createForm(RoleFormType::class,$rol);
@@ -99,8 +102,8 @@ class RolesController extends BaseController
     }   
 
     /**
-     * @Route("/admin/roles/delete/{id}",name="delete_role", requirements={"id":"\d+"})
-     * @IsGranted("ROLE_SUPERUSER")
+     * @Route("/roles/delete/{id}",name="delete_role", requirements={"id":"\d+"})
+     * @IsGranted("ROLES_ELIMINAR")
      */
     public function delete(Request $request, Role $rol){
         if ($this->isCsrfTokenValid('delete'.$rol->getId(), $request->request->get('_token'))) {

@@ -31,7 +31,7 @@ class ReparticionController extends BaseController
 
     /**
      * @Route("/admin/reparticion", name="index_reparticion")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @IsGranted("REPARTICION_VER")
      */
     public function index(Request $request){
 
@@ -54,7 +54,7 @@ class ReparticionController extends BaseController
 
     /**
      * @Route("/admin/reparticion/{id}", name="show_reparticion", requirements={"id":"\d+"})
-     * @IsGranted("ROLE_SUPERUSER")
+     * @IsGranted("REPARTICION_VER")
      */
     public function show(Request $request, Reparticion $reparticion)
     {    
@@ -65,7 +65,7 @@ class ReparticionController extends BaseController
 
     /**
      * @Route("/admin/reparticion/new",name="new_reparticion")
-     * @IsGranted("ROLE_SUPERUSER")
+     * @IsGranted("REPARTICION_CREAR")
      */
     public function new(Request $request){
         $form = $this->createForm(ReparticionFormType::class);
@@ -84,7 +84,7 @@ class ReparticionController extends BaseController
 
     /**
      * @Route("/admin/reparticion/edit/{id}",name="edit_reparticion", requirements={"id":"\d+"})
-     * @IsGranted("ROLE_SUPERUSER")
+     * @IsGranted("REPARTICION_EDITAR")
      */
     public function edit(Reparticion $reparticion, Request $request){
         $form = $this->createForm(ReparticionFormType::class,$reparticion);
@@ -100,7 +100,7 @@ class ReparticionController extends BaseController
 
     /**
      * @Route("/admin/reparticion/delete/{id}",name="delete_reparticion", requirements={"id":"\d+"})
-     * @IsGranted("ROLE_SUPERUSER")
+     * @IsGranted("REPARTICION_ELIMINAR")
      */
     public function delete(Request $request, Reparticion $reparticion){
         if ($this->isCsrfTokenValid('delete'.$reparticion->getId(), $request->request->get('_token'))) {

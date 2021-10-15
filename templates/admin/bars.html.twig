@@ -37,6 +37,7 @@
                         </li>
 
                         {# MENÚ DE ADMINISTRACIÓN #}
+                        {% if is_granted('ADMINISTRACION') %}
                         <li><a><i class="fa fa-gear"></i>Administrar <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li>
@@ -56,6 +57,7 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}
 
                     </ul>
                 </div>
