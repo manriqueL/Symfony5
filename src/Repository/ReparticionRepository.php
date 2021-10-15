@@ -33,7 +33,6 @@ class ReparticionRepository extends ServiceEntityRepository
     }
 
     public function delete(Reparticion $reparticion){
-        //$reparticion->setDeleted(true);
         try {
             $this->entityManager->remove($reparticion);
             $this->entityManager->flush();

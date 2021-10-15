@@ -25,7 +25,7 @@ class Role
     private $roleName;
 
     /**
-     * @ORM\OneToMany(targetEntity=Permiso::class, mappedBy="role")
+     * @ORM\OneToMany(targetEntity=Permiso::class, mappedBy="role", cascade={"remove"})
      */
     private $permisos;
 

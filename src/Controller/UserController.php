@@ -72,8 +72,10 @@ class UserController extends BaseController
      */
     public function show(Request $request, User $user)
     {    
+        $role = $this->roleRepository->findByName($user->getRoles()[0]);
         return $this->render('admin/user/show.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'role' => $role
         ]);
     }
 

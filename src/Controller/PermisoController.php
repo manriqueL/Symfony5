@@ -55,7 +55,7 @@ class PermisoController extends BaseController
                 $this->addFlash("error-modificado","");
             }
         }
-        return $this->redirectToRoute('index_roles'); 
+        return $this->redirectToRoute('show_role', ["id"=> $role->getId()]); 
     }
 
 

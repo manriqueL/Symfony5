@@ -8,8 +8,8 @@
       <div class="x_panel">
         <div class="x_title">
             <h2 class="title-page">Rol: {{ rol.roleName }}</h2>            
-            <a class="btn btn-primary btn-sm float-end" style="margin-right:15px;" href="{{ path('index_roles') }}">
-              <i class="fa fa-mail-reply"></i> &nbsp; Volver al listado
+            <a class="btn btn-primary btn-sm float-end" style="margin-right:15px;" href="{{ app.request.headers.get('referer') }}">
+              <i class="fa fa-mail-reply"></i> &nbsp; Volver atrás
             </a>
             <a class="btn btn-primary btn-sm float-end" href="{{ path('edit_role',{"id":rol.id}) }}">
               <i class="fa fa-edit"></i> &nbsp; Editar
@@ -36,9 +36,15 @@
                   </a>
                   <div class="x_content">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="ADMINISTRACION" type="checkbox" id="flexSwitchCheckDefault">
+                      <input class="form-check-input" name="ADMINISTRACION"
+                      {% if "ADMINISTRACION" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                       <label class="form-check-label" for="flexSwitchCheckDefault">Acceder a la administración</label>
-                    </div>                    
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" name="VER_INICIO"
+                      {% if "VER_INICIO" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Acceder al inicio</label>
+                    </div>
                   </div>
                 </div>                      
               </div>
@@ -70,27 +76,33 @@
                       </a>
                       <div class="x_content">
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="USERS_CREAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="USERS_CREAR" 
+                          {% if "USERS_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Crear</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="USERS_VER" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="USERS_VER" 
+                          {% if "USERS_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Ver</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="USERS_EDITAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="USERS_EDITAR"
+                          {% if "USERS_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Editar</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="USERS_ELIMINAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="USERS_ELIMINAR" 
+                          {% if "USERS_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Eliminar</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="USERS_ACTIVAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="USERS_ACTIVAR"
+                          {% if "USERS_ACTIVAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Activar/Desactivar Cuentas</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="USERS_PASSWORD" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="USERS_PASSWORD"
+                          {% if "USERS_PASSWORD" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Cambiar Contraseñas</label>
                         </div>
                       </div>
@@ -109,19 +121,23 @@
                       </a>
                       <div class="x_content">
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="ROLES_CREAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="ROLES_CREAR"
+                          {% if "ROLES_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Crear</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="ROLES_VER" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="ROLES_VER"
+                          {% if "ROLES_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Ver</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="ROLES_EDITAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="ROLES_EDITAR"
+                          {% if "ROLES_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Editar</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="ROLES_ELIMINAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="ROLES_ELIMINAR"
+                          {% if "ROLES_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Eliminar</label>
                         </div>                                
                       </div>
@@ -140,19 +156,23 @@
                       </a>
                       <div class="x_content">
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="REPARTICION_CREAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="REPARTICION_CREAR"
+                          {% if "REPARTICION_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Crear</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="REPARTICION_VER" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="REPARTICION_VER"
+                          {% if "REPARTICION_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Ver</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="REPARTICION_EDITAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="REPARTICION_EDITAR"
+                          {% if "REPARTICION_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Editar</label>
                         </div>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" name="REPARTICION_ELIMINAR" type="checkbox" id="flexSwitchCheckDefault">
+                          <input class="form-check-input" name="REPARTICION_ELIMINAR"
+                          {% if "REPARTICION_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                           <label class="form-check-label" for="flexSwitchCheckDefault">Eliminar</label>
                         </div>                                
                       </div>
@@ -177,19 +197,23 @@
                   </a>
                   <div class="x_content">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="EJEMPLO2_CREAR" type="checkbox" id="flexSwitchCheckDefault">
+                      <input class="form-check-input" name="EJEMPLO2_CREAR"
+                      {% if "EJEMPLO2_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                       <label class="form-check-label" for="flexSwitchCheckDefault">Permiso ejemplo 1</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="EJEMPLO2_VER" type="checkbox" id="flexSwitchCheckDefault">
+                      <input class="form-check-input" name="EJEMPLO2_VER"
+                      {% if "EJEMPLO2_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                       <label class="form-check-label" for="flexSwitchCheckDefault">Permiso ejemplo 2</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="EJEMPLO2_EDITAR" type="checkbox" id="flexSwitchCheckDefault">
+                      <input class="form-check-input" name="EJEMPLO2_EDITAR"
+                      {% if "EJEMPLO2_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                       <label class="form-check-label" for="flexSwitchCheckDefault">Permiso ejemplo 3</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="EJEMPLO2_ELIMINAR" type="checkbox" id="flexSwitchCheckDefault">
+                      <input class="form-check-input" name="EJEMPLO2_ELIMINAR"
+                      {% if "EJEMPLO2_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="flexSwitchCheckDefault">
                       <label class="form-check-label" for="flexSwitchCheckDefault">Permiso ejemplo 4</label>
                     </div>                                
                   </div>

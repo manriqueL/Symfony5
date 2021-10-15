@@ -33,6 +33,7 @@ class PermissionVoter extends Voter
     /* Voter específicos de usuarios */
     const especificos = [
         'ADMINISTRACION',
+        'VER_INICIO',
         'USERS_ACTIVAR',
         'USERS_PASSWORD'
     ];

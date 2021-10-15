@@ -8,8 +8,8 @@
       <div class="x_panel">
         <div class="x_title">
             <h2 class="title-page">Usuario ID: {{ user.id }}</h2>
-            <a class="btn btn-primary btn-sm float-right" style="margin-right:15px;" href="{{ path('app_admin_users') }}">
-              <i class="fa fa-mail-reply"></i> &nbsp; Volver al listado
+            <a class="btn btn-primary btn-sm float-right" style="margin-right:15px;" href="{{ app.request.headers.get('referer') }}">
+              <i class="fa fa-mail-reply"></i> &nbsp; Volver atrás
             </a>
             <a class="btn btn-primary btn-sm float-right" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
               <i class="fa fa-edit"></i> &nbsp; Editar
@@ -73,9 +73,13 @@
                         </tr>
                         {# Roles #}                        
                           <tr>
-                            <th width="150" class="text-right">Role:</th>
+                            <th width="150" class="text-right">Role:</th>                            
                             {% if user.roles %}
-                              <td>{{ user.roles[0] }}</td>
+                              <td>
+                                <a href="{{ path('show_role',{"id": role.id}) }}">
+                                  {{ role.getRoleName }}
+                                </a>
+                              </td>
                             {% else %}
                               <td>Sin roles asignados</td>
                             {% endif %}
