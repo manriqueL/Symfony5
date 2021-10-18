@@ -1,0 +1,20 @@
+body{
+    background: grey;
+}
+.allCenter{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.title-error{
+    font-size: 5em;
+}
+.subtitle-error{
+    font-size: 2em;
+}
+.help-error{
+    font-size: 1.2em;
+}
