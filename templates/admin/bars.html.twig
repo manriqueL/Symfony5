@@ -2,20 +2,16 @@
 {% block bars %}
     <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-                <a href="{{ path('inicio_index') }}" class="site_title"><i class="fa fa-paw"></i> <span>ONEHEALTH</span></a>
+            <div class="navbar nav_title">
+                <div class="title-page-side" >
+                    <div id="title-page">
+                        {{ site_name }}
+                    </div>                    
+                    <img id="logo-side" class="logo-side" src="{{ asset('src/img/logo.png') }}" alt="TSJ">
+                </div>                        
             </div>
 
             <div class="clearfix"></div>
-
-            <!-- menu profile quick info -->
-            <div class="profile clearfix">
-                <div class="profile_pic">
-                </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
 
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu ">
@@ -64,7 +60,9 @@
 
             </div>
             <!-- /sidebar menu -->
-
+            <div class="sidebar-footer hidden-small mb-4">
+                <img class="logo-menu" src="{{ asset('src/img/logo.png') }}" alt="TSJ">
+            </div>
             <!-- /menu footer buttons -->
         </div>
     </div>

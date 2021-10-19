@@ -9,7 +9,7 @@
     background: #ffffff;
     border: #2a3f54 5px solid;
     border-radius: 0;
-    height: 69px;
+    height: 120px;
     padding: 0px;
 }
 .logo_img {
@@ -860,10 +860,6 @@
   font-size: 27px;
   margin: 13px 0 0 3px; }
 
-.site_title i {
-  border: 1px solid #EAEAEA;
-  padding: 5px 6px;
-  border-radius: 50%; }
 
 .nav-sm .main_container .top_nav {
   display: block;
@@ -1051,7 +1047,7 @@ body .container.body .right_col {
   float: left;
   background: #2A3F54;
   border-radius: 0;
-  height: 57px;
+  height: 120px;
   padding: 0px; }
 
 @media (max-width: 991px) {
@@ -1432,11 +1428,11 @@ a:hover, a:focus {
   width: 100%;
   color: #ECF0F1 !important;
   margin-left: 0 !important;
-  line-height: 59px;
   display: block;
-  height: 55px;
+  height: 175px;
   margin: 0;
-  padding-left: 10px; }
+  text-align: center;
+}
 
 .site_title:hover, .site_title:focus {
   text-decoration: none; }
@@ -2262,7 +2258,9 @@ span.right {
   padding: 5px 0 0 0;
   position: fixed;
   width: 230px;
-  background: #2A3F54; }
+  background: #2A3F54;
+  text-align: center;
+}
 
 .sidebar-footer a {
   padding: 7px 0 3px;
@@ -5077,4 +5075,19 @@ span.current{
 }
 .form-group label{
   color:black;
+}
+.logo-menu{
+  width: 100px;
+}
+.logo-side{
+  width: 50px;
+  margin-left: 5px;
+  display: none;
+}
+.title-page-side{
+  width: 100%;
+  text-align: center;
+  font-size: 1.5em;
+  color: white;
+  color: #ECF0F1 !important;
 }

@@ -55,6 +55,7 @@ function init_sidebar() {
     var setContentHeight = function () {
         // reset height
         $RIGHT_COL.css('min-height', $(window).height());
+        $RIGHT_COL.css('border-radius','5px');
 
         var bodyHeight = $BODY.outerHeight(),
             footerHeight = $BODY.hasClass('footer_fixed') ? -10 : $FOOTER.height(),
@@ -102,11 +103,17 @@ function init_sidebar() {
 
     // toggle small or large menu
     $MENU_TOGGLE.on('click', function () {
+        let title = document.getElementById('title-page');
+        let logoTitle = document.getElementById('logo-side');
         if ($BODY.hasClass('nav-md')) {
             $SIDEBAR_MENU.find('li.active ul').hide();
+            title.style.display = "none";
+            logoTitle.style.display = "block";
             $SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active');
         } else {
             $SIDEBAR_MENU.find('li.active-sm ul').show();
+            title.style.display = "block";
+            logoTitle.style.display = "none";
             $SIDEBAR_MENU.find('li.active-sm').addClass('active').removeClass('active-sm');
         }
 
