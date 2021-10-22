@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
-class UserFormType extends AbstractType
+class NewUserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -56,6 +56,14 @@ class UserFormType extends AbstractType
             ->add("direccion", TextType::class, [
                 "label" => "Dirección",
                 "required" => false,
+            ])            
+            ->add("justpassword", TextType::class, [
+                "label" => $this->translator->trans('backend.user.password'),
+                "required" => true,
+                "mapped" => false,
+                "constraints" => [
+                    new NotBlank(["message" => "El campo no puede estar vacío"])
+                ]
             ])
             ->add("role", EntityType::class, [
                 "mapped" => false,

@@ -92,6 +92,14 @@
             </div>
           </div>
         </div>
+
+        <a class="btn btn-sm btn-warning float-right text-dark" href="{{ path('change_user_passwd', {"id":user.id}) }}">
+          <i class="fa fa-exchange"></i> &nbsp; Cambiar Contraseña
+        </a>
+        <a class="btn btn-sm btn-danger float-right" href="{{ path('app_admin_changevalidite_user', {"id":user.id}) }}">
+          <i class="fa fa-warning"></i> &nbsp; Suspender
+        </a>
+
       </div>
     </div>
   </div>

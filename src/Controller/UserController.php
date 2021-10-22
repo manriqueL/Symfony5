@@ -7,7 +7,9 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Form\ChangePwsdFormType;
+use App\Form\ChangeUserPasswdFormType;
 use App\Form\UserFormType;
+use App\Form\NewUserFormType;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -85,7 +87,7 @@ class UserController extends BaseController
      */
     public function newUser(Request $request, TranslatorInterface $translator)
     {
-        $form = $this->createForm(UserFormType::class, null, ["translator" => $translator]);
+        $form = $this->createForm(NewUserFormType::class, null, ["translator" => $translator]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
@@ -109,18 +111,13 @@ class UserController extends BaseController
      */
     public function editUser(User $user, Request $request, TranslatorInterface $translator)
     {
-        $form = $this->createForm(UserFormType::class, $user, ["translator" => $translator]);
-        $form->get('justpassword')->setData($user->getPassword());
+        $form = $this->createForm(UserFormType::class, $user, ["translator" => $translator]);        
         $therole = $this->roleRepository->findOneBy(["roleName" => $user->getRoles()[0]]);
         $form->get('role')->setData($therole);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $role = $form["role"]->getData();
-            $password = $form["justpassword"]->getData();
-            $user->setRoles([$role->getRoleName()]);
-            if ($user->getPassword() != $password) {
-                $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
-            }
+            $user->setRoles([$role->getRoleName()]);            
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash("success-modificado","");
@@ -130,13 +127,13 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/changevalidite/{id}",name="app_admin_changevalidite_user",methods={"post"}, requirements={"id":"\d+"}))
+     * @Route("/changevalidite/{id}",name="app_admin_changevalidite_user", requirements={"id":"\d+"}))
      * @IsGranted("USERS_ACTIVAR")
      */
     public function activate(User $user)
     {
         $user = $this->userRepository->changeValidite($user);
-        return $this->json(["message" => "success", "value" => $user->isValid()]);
+        return $this->redirectToRoute("show_user", ['id' => $user->getId()]);
     }
 
     /**
@@ -158,7 +155,6 @@ class UserController extends BaseController
 
     /**
      * @Route("/changePassword",name="app_admin_changepswd")
-     * @IsGranted("USERS_PASSWORD")
      */
     public function changePswd(Request $request, TranslatorInterface $translator)
     {
@@ -181,6 +177,32 @@ class UserController extends BaseController
             $this->entityManager->flush();
             $this->addFlash("success", "Contraseña actualizada correctamente!");
             return $this->redirectToRoute("app_admin_index");
+        }
+        return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
+    }
+
+    /**
+     * @Route("/changePassword/{id}", name="change_user_passwd", requirements={"id":"\d+"}))
+     * @IsGranted("USERS_PASSWORD")
+     */
+    public function changeUserPasswd(Request $request, User $user)
+    {
+        $form = $this->createForm(ChangeUserPasswdFormType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newPassword = $form["newpassword"]->getData();
+
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $newPassword));
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            $this->addFlash("success", "Contraseña actualizada correctamente!");
+
+            $role = $this->roleRepository->findByName($user->getRoles()[0]);
+            return $this->render('admin/user/show.html.twig', [
+                'user' => $user,
+                'role' => $role
+            ]);
         }
         return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
     }

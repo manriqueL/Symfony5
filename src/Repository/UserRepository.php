@@ -80,4 +80,14 @@ class UserRepository extends ServiceEntityRepository
             return $e;
         }
     }
+
+    public function changeValidite(User $user){
+      if ($user->getSuspended())
+          $user->setSuspended(false);
+      else
+          $user->setSuspended(true);
+      $this->entityManager->persist($user);
+      $this->entityManager->flush();
+      return $user;
+  }
 }

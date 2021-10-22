@@ -25,6 +25,17 @@
                                 <table id="example" class="display table table-hover" >
                                     {# Títulos de tabla #}
                                     <thead>
+                                        {# SUSPENDIDO #}
+                                        <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;" width="100px">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                {{ knp_pagination_sortable(pagination, 'Activo', 'e.suspended') }}
+                                                {% if pagination.getSort == 'e.suspended' and pagination.getDirection == 'asc' %}
+                                                    <i class="fa fa-level-up"></i>
+                                                {% elseif pagination.getSort == 'e.suspended' and pagination.getDirection == 'desc' %}
+                                                    <i class="fa fa-level-down"></i>
+                                                {% endif %}
+                                            </div>
+                                        </th>
                                         {# ID #}
                                         <th scope="col" class="font-weight-semi-bold py-2" style="cursor: auto;" width="100px">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -69,7 +80,7 @@
                                                 {% endif %}
                                             </div>
                                         </th>
-                                        <th class="btn-table-width" style="cursor: auto;">
+                                        <th class="btn-table-width text-center" style="cursor: auto;">
                                             Acciones
                                         </th>
                                     </thead>
@@ -78,6 +89,13 @@
                                     <tbody>
                                         {% for user in pagination %}
                                             <tr>
+                                                <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">
+                                                    {% if user.suspended %}
+                                                        <i class="fa fa-minus-square text-danger"></i>
+                                                    {% else %}
+                                                        <i class="fa fa-check-square text-success"></i>
+                                                    {% endif %}
+                                                </td>
                                                 <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">{{ user.id }}</td>
                                                 <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">{{ user.nombre }}</td>
                                                 <td class="align-middle td-cursor" onClick="window.location='{{ path('show_user',{"id":user.id}) }}'">{{ user.username }}</td>

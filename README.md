@@ -13,3 +13,4 @@
 6. symfony server:start
 7. Abrir navegador en la dirección localhost:8000/admin
 8. Loguear con credenciales: admin/admin
+9. Ir al menú lateral izquierdo -> Administrar -> Roles -> ROLE_SUPERUSER y asignarle todos los permisos necesarios
