@@ -11,6 +11,7 @@
 /public/images
 ###> liip/imagine-bundle ###
 /public/media/cache/
+/public/base/node_modules
 ###< liip/imagine-bundle ###
 ###> phpstorm project files
 /.idea/
