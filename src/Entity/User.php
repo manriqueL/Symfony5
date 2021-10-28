@@ -203,7 +203,8 @@ class User implements UserInterface, EquatableInterface
     
     public function __toString()
     {
-        return "$this->apellido.','.$this->nombre ($this->id)";
+        $fullName = $this->apellido.', '.$this->nombre;
+        return $fullName;
     }
 
     public function isEqualTo(UserInterface $user)

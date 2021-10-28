@@ -17,7 +17,8 @@ class InicioController extends AbstractController
      */
     public function index(){
         if($this->getUser()){
-            return $this->render("inicio/index.html.twig");
+            return $this->render("base/index.html.twig");
+            //return $this->render("inicio/index.html.twig");
         }else{
             return $this->redirectToRoute("app_login");
         }
