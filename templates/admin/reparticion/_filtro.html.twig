@@ -1,22 +1,24 @@
 {% if form is defined and form|length > 0 %}
-  <div class="filtro accordion accordion-stacked bg-white" style="padding:0px;">
-    <header id="heading4" class="accordion-header collapsed {{ app.request.get("filtro") ? "activo" : "" }}" data-toggle="collapse" data-target="#collapse-filtro">
-      <i class="fa fa-search icon-text mr-2"></i>
-      <h5 class="mb-0">{{ app.request.get("filtro") ? "Resultados de búsqueda" : "Buscar" }}</h5>
-      <i class="fa fa-sort-down icon-text ml-auto" style="margin-top: -7px;"></i>
-    </header>
-    <div id="collapse-filtro" class="collapse" style="border-bottom:solid 1px #ccc;">
-      <div class="card card-body">
-        {{ form_start(form, {attr: {"novalidate":"novalidate"}}) }}
-            {{ form_widget(form) }}
-            <div class="row">
-              <div class="col">
-                <button class="float-right btn btn-sm btn-primary" style="margin-left:15px;">Buscar</button>
-                <a class="btn btn-sm float-right btn-light" href="{{ path('index_reparticion') }}">Cancelar</a>
-              </div>
-            </div>
-        {{ form_end(form) }}
+
+  <div class="card shadow mb-4">
+      <a href="#collapseSearch" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSearch">
+          <h6 class="m-0 font-weight-bold text-dark">
+            <i class="fa fa-search"></i> &nbsp; Buscar
+          </h6>
+      </a>
+      <div class="collapse" id="collapseSearch">
+          <div class="card-body">
+              {{ form_start(form, {attr: {"novalidate":"novalidate"}}) }}
+                {{ form_widget(form) }}
+                <div class="row">
+                  <div class="col">
+                    <button class="float-right btn btn-sm btn-primary" style="margin-left:15px;">Buscar</button>
+                    <a class="btn btn-sm float-right btn-light" href="{{ path('index_reparticion') }}">Quitar Filtros</a>
+                  </div>
+                </div>
+              {{ form_end(form) }}
+          </div>
       </div>
-    </div>
   </div>
+
 {% endif %}

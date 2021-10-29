@@ -75,7 +75,7 @@ class ReparticionController extends BaseController
             $reparticion = $form->getData();
             $this->entityManager->persist($reparticion);
             $this->entityManager->flush();
-            $this->addFlash("success-nuevo","");
+            $this->addFlash("success","Repartición creada correctamente.");
             return $this->redirectToRoute("index_reparticion");
 
         }
@@ -92,7 +92,7 @@ class ReparticionController extends BaseController
         if ($form->isSubmitted() && $form->isValid()){
             $this->entityManager->persist($reparticion);
             $this->entityManager->flush();
-            $this->addFlash("success-modificado","");
+            $this->addFlash("success","Repartición editada correctamente.");
             return $this->redirectToRoute("index_reparticion");
         }
         return $this->render("admin/reparticion/new.html.twig", ["form"=>$form->createView()]);
@@ -106,9 +106,9 @@ class ReparticionController extends BaseController
         if ($this->isCsrfTokenValid('delete'.$reparticion->getId(), $request->request->get('_token'))) {
             $resp = $this->reparticionRepository->delete($reparticion);
             if($resp === true){
-                $this->addFlash("success-eliminado","");
+                $this->addFlash("success","Repartición eliminada correctamente.");
             }else{
-                $this->addFlash("error-eliminado","");
+                $this->addFlash("danger","Error al eliminar la repartición.");
             }
         }
         return $this->redirectToRoute('index_reparticion');          

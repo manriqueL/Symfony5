@@ -1,45 +1,33 @@
-{% extends "admin/bars.html.twig" %}
+{% extends "base/index.html.twig" %}
 
-{% block contenpage %}
+{% block headerMain %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h4 mb-0 text-dark"><b>Repartición ID: {{ reparticion.id }}</b></h1>
+        <div class="align-items-center justify-content-end">
+          <a href="{{ path('edit_reparticion',{"id":reparticion.id}) }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa fa-edit"></i> &nbsp; Editar
+          </a>
+          <a href="{{ path('index_reparticion') }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa fa-reply"></i> &nbsp; Ver el listado
+          </a>
+        </div>
+    </div>
+{% endblock %}
 
-<div class="">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="x_panel">
-        <div class="x_title">
-            <h2 class="title-page">Repartición ID: {{ reparticion.id }}</h2>            
-            <a class="btn btn-primary btn-sm float-right" style="margin-right:15px;" href="{{ app.request.headers.get('referer') }}">
-              <i class="fa fa-mail-reply"></i> &nbsp; Volver atrás
-            </a>
-            <a class="btn btn-primary btn-sm float-right" href="{{ path('edit_reparticion',{"id":reparticion.id}) }}">
-              <i class="fa fa-edit"></i> &nbsp; Editar
-            </a>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <div class="row">
-            <div class="table-responsive">
-              <div class="row text-left" style="margin:0 0 20px 0;">               
-                <div class="col-md ml-md-auto text-md-right">                          
-                  <div class="row text-left">
-                    <table class="table">
-                      <tbody>
-                        {# Nombre #}
-                        <tr>
-                          <th width="150" class="text-right">Nombre:</th>
-                          <td>{{ reparticion.nombre }}</td>
-                        </tr>                        
-                      </tbody>
-                    </table>   
-                  </div>
-                </div>
-              </div>    
-            </div>
-          </div>
-        </div>
-      </div>
+{% block rowMain %}
+
+  <div class="col">
+    <div class="table-responsive mt-3 pb-3">
+      <table class="table">
+        <tbody>
+          {# Nombre #}
+          <tr>
+            <th width="150" class="text-right">Nombre:</th>
+            <td>{{ reparticion.nombre }}</td>
+          </tr>                        
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
 
-{% endblock contenpage %}
+{% endblock rowMain %}
