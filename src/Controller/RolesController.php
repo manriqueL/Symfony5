@@ -78,7 +78,7 @@ class RolesController extends BaseController
             $rol = $form->getData();
             $this->entityManager->persist($rol);
             $this->entityManager->flush();
-            $this->addFlash("success-nuevo","");
+            $this->addFlash("success","Rol creado correctamente.");
             return $this->redirectToRoute("index_roles");
 
         }
@@ -95,7 +95,7 @@ class RolesController extends BaseController
         if ($form->isSubmitted() && $form->isValid()){
             $this->entityManager->persist($rol);
             $this->entityManager->flush();
-            $this->addFlash("success-modificado","");
+            $this->addFlash("success","Rol modificado correctamente.");
             return $this->redirectToRoute("index_roles");
         }
         return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
@@ -109,9 +109,9 @@ class RolesController extends BaseController
         if ($this->isCsrfTokenValid('delete'.$rol->getId(), $request->request->get('_token'))) {
             $resp = $this->rolesRepository->delete($rol);
             if($resp === true){
-                $this->addFlash("success-eliminado","");
+                $this->addFlash("success","Rol eliminado correctamente.");
             }else{
-                $this->addFlash("error-eliminado","");
+                $this->addFlash("danger","Error al eliminar el rol.");
             }
         }
         return $this->redirectToRoute('index_roles');          
