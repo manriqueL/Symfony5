@@ -20,3 +20,4 @@
 .env
 /public/base/node_modules
 /public/base/package-lock.json
+composer.lock
