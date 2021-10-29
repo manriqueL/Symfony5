@@ -1,108 +1,95 @@
-{% extends "admin/bars.html.twig" %}
+{% extends "base/index.html.twig" %}
 
-{% block contenpage %}
+{% block headerMain %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h4 mb-0 text-dark"><b>Usuario ID: {{ user.id }}</b></h1>
+        <div class="align-items-center justify-content-end">
+          <a href="{{ path('app_admin_edit_user',{"id":user.id}) }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa fa-edit"></i> &nbsp; Editar
+          </a>
+          <a href="{{ path('app_admin_users') }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa fa-reply"></i> &nbsp; Ver el listado
+          </a>
+        </div>        
+    </div>
+{% endblock %}
 
-<div class="">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="x_panel">
-        <div class="x_title">
-            <h2 class="title-page">Usuario ID: {{ user.id }}</h2>
-            <a class="btn btn-primary btn-sm float-right" style="margin-right:15px;" href="{{ app.request.headers.get('referer') }}">
-              <i class="fa fa-mail-reply"></i> &nbsp; Volver atrás
-            </a>
-            <a class="btn btn-primary btn-sm float-right" href="{{ path('app_admin_edit_user',{"id":user.id}) }}">
-              <i class="fa fa-edit"></i> &nbsp; Editar
-            </a>
-            <div class="clearfix"></div>
-        </div>
-
-        {% if user.suspended %}
-          <div class="alert alert-danger" role="alert">
-            <div class="alert-suspended">El usuario se encuentra suspendido.</div>
-          </div>
-        {% endif %}
-
-        <div class="x_content">
-          <div class="row">
-            <div class="table-responsive">
-              <div class="row text-left" style="margin:0 0 20px 0;">               
-                <div class="col-md ml-md-auto text-md-right">                          
-                  <div class="row text-left">
-                    <table class="table">
-                      <tbody>
-                        {# Nombre #}
-                        <tr>
-                          <th width="150" class="text-right">Nombre:</th>
-                          <td>{{ user.nombre }}</td>
-                        </tr>
-                        {# Apellido #}
-                        <tr>
-                          <th width="150" class="text-right">Apellido:</th>
-                          <td>{{ user.apellido }}</td>
-                        </tr>
-                        {# Email #}
-                        <tr>
-                          <th width="150" class="text-right">Email:</th>
-                          <td>{{ user.email }}</td>
-                        </tr>
-                        {# Usuario #}
-                        <tr>
-                          <th width="150" class="text-right">Usuario:</th>
-                          <td>{{ user.username }}</td>
-                        </tr>
-                        {# DNI #}
-                        <tr>
-                          <th width="150" class="text-right">DNI:</th>
-                          <td>{{ user.dni }}</td>
-                        </tr>
-                        {# CUIL #}
-                        <tr>
-                          <th width="150" class="text-right">CUIL:</th>
-                          <td>{{ user.cuil }}</td>
-                        </tr>
-                        {# Teléfono #}
-                        <tr>
-                          <th width="150" class="text-right">Teléfono:</th>
-                          <td>{{ user.telefono }}</td>
-                        </tr>
-                        {# Dirección #}
-                        <tr>
-                          <th width="150" class="text-right">Dirección:</th>
-                          <td>{{ user.direccion }}</td>
-                        </tr>
-                        {# Roles #}                        
-                          <tr>
-                            <th width="150" class="text-right">Role:</th>                            
-                            {% if user.roles %}
-                              <td>
-                                <a href="{{ path('show_role',{"id": role.id}) }}">
-                                  {{ role.getRoleName }}
-                                </a>
-                              </td>
-                            {% else %}
-                              <td>Sin roles asignados</td>
-                            {% endif %}
-                          </tr>                        
-                      </tbody>
-                    </table>   
-                  </div>
-                </div>
-              </div>    
-            </div>
-          </div>
-        </div>
-
-        <a class="btn btn-sm btn-warning float-right text-dark" href="{{ path('change_user_passwd', {"id":user.id}) }}">
-          <i class="fa fa-exchange"></i> &nbsp; Cambiar Contraseña
-        </a>
-        <a class="btn btn-sm btn-danger float-right" href="{{ path('app_admin_changevalidite_user', {"id":user.id}) }}">
-          <i class="fa fa-warning"></i> &nbsp; Suspender
-        </a>
-
+{% block rowMain %}
+  <div class="col">
+    
+    {% if user.suspended %}
+      <div class="alert alert-danger" role="alert">
+        <div class="alert-suspended">El usuario se encuentra suspendido.</div>
       </div>
+    {% endif %}
+
+    <div class="table-responsive mt-3 pb-3">
+      <table class="display table table-hover" >
+        <tbody>
+          {# Nombre #}
+            <tr>
+              <th width="150" class="text-right">Nombre:</th>
+              <td>{{ user.nombre }}</td>
+            </tr>
+            {# Apellido #}
+            <tr>
+              <th width="150" class="text-right">Apellido:</th>
+              <td>{{ user.apellido }}</td>
+            </tr>
+            {# Email #}
+            <tr>
+              <th width="150" class="text-right">Email:</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            {# Usuario #}
+            <tr>
+              <th width="150" class="text-right">Usuario:</th>
+              <td>{{ user.username }}</td>
+            </tr>
+            {# DNI #}
+            <tr>
+              <th width="150" class="text-right">DNI:</th>
+              <td>{{ user.dni }}</td>
+            </tr>
+            {# CUIL #}
+            <tr>
+              <th width="150" class="text-right">CUIL:</th>
+              <td>{{ user.cuil }}</td>
+            </tr>
+            {# Teléfono #}
+            <tr>
+              <th width="150" class="text-right">Teléfono:</th>
+              <td>{{ user.telefono }}</td>
+            </tr>
+            {# Dirección #}
+            <tr>
+              <th width="150" class="text-right">Dirección:</th>
+              <td>{{ user.direccion }}</td>
+            </tr>
+            {# Roles #}                        
+            <tr>
+              <th width="150" class="text-right">Role:</th>                            
+              {% if user.roles %}
+                <td>
+                  <a href="{{ path('show_role',{"id": role.id}) }}">
+                    {{ role.getRoleName }}
+                  </a>
+                </td>
+              {% else %}
+                <td>Sin roles asignados</td>
+              {% endif %}
+            </tr>
+        </tbody>
+      </table>
+
+      <a class="btn btn-sm btn-warning float-right text-dark ml-2" href="{{ path('change_user_passwd', {"id":user.id}) }}">
+        <i class="fas fa-sync"></i> &nbsp; Cambiar Contraseña
+      </a>      
+      <a class="btn btn-sm btn-danger float-right" href="{{ path('app_admin_changevalidite_user', {"id":user.id}) }}">
+        <i class="fas fa-exclamation-circle"></i> &nbsp; {% if user.suspended %}Quitar suspensión{% else %}Suspender{% endif %}
+      </a>
+
     </div>
   </div>
-</div>
 
-{% endblock contenpage %}
+{% endblock rowMain %}

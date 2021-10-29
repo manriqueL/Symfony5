@@ -1,29 +1,28 @@
-{% extends 'admin/bars.html.twig' %}
+{% extends "base/index.html.twig" %}
 
-{% block contenpage %}
-    <div class="">
-        <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h4 style="color:black;">Editar Usuario</h4>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        {{ form_start(userForm) }}
-                        {{ form_widget(userForm) }}
-                        <div class="ln_solid"></div>
-                        <div class="item form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <a class="btn btn-secondary" href="{{ path('app_admin_users') }}">Cancelar</a>
-                                <button type="submit" name="valider" class="btn btn-success">Guardar</button>
-                            </div>
-                        </div>
-                        {{ form_end(userForm) }}
-                    </div>
-                </div>
-            </div>
-        </div>
+{% block headerMain %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h4 mb-0 text-dark"><b>Editar Usuario</b></h1>
+        <div class="align-items-center justify-content-end">
+          <a href="{{ path('app_admin_users') }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa fa-reply"></i> &nbsp; Ver el listado
+          </a>
+        </div>        
     </div>
 {% endblock %}
+
+{% block rowMain %}
+  <div class="col">
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(userForm) }}
+                {{ form_widget(userForm) }}
+                <div class="form-group">
+                    <a class="btn btn-secondary" href="{{ path('app_admin_users') }}">Cancelar</a>
+                    <button type="submit" name="valider" class="btn btn-success">Guardar</button>
+                </div>
+            {{ form_end(userForm) }}
+        </div>
+    </div>
+  </div>
+{% endblock rowMain %}

@@ -1,3 +1,32 @@
-.table td{
+/* Colores del Side Menú */
+$background-side-menu: #224abe !important;
+$color-letra-side-menu: white !important;
+$color-letra-side-menu-hover: wheat !important;
+/* Colores del Top Menú */
+$background-top-menu: white !important;
+$color-letra-top-menu: black !important;
+
+
+
+.cursorPointer{
   cursor: pointer;
+}
+.bg-gradient-primary{
+  background: $background-side-menu;
+}
+.nav-link{
+  color: $color-letra-side-menu;
+}
+.nav-link:hover{
+  color: $color-letra-side-menu-hover;
+}
+.top-menu-custom{
+  background: $background-top-menu;
+}
+.navbar-search{
+  color: $color-letra-top-menu;
+  font-size: 1.2rem;
+}
+.table, .table-hover tbody tr:hover{
+  color: black;
 }

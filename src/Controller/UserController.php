@@ -120,7 +120,7 @@ class UserController extends BaseController
             $user->setRoles([$role->getRoleName()]);            
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $this->addFlash("success-modificado","");
+            $this->addFlash("success", "mensaje");
             return $this->redirectToRoute("app_admin_users");
         }
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
