@@ -99,7 +99,7 @@ class UserController extends BaseController
                 ->setRoles([$role->getRoleName()]);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $this->addFlash("success-nuevo","");
+            $this->addFlash("success", "Usuario creado correctamente.");
             return $this->redirectToRoute("app_admin_users");
         }        
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
@@ -120,7 +120,7 @@ class UserController extends BaseController
             $user->setRoles([$role->getRoleName()]);            
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $this->addFlash("success", "mensaje");
+            $this->addFlash("success", "Usuario editado correctamente.");
             return $this->redirectToRoute("app_admin_users");
         }
         return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
@@ -145,9 +145,9 @@ class UserController extends BaseController
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $resp = $this->userRepository->delete($user);
             if($resp === true){
-                $this->addFlash("success-eliminado","");
+                $this->addFlash("success", "Usuario eliminado correctamente.");
             }else{
-                $this->addFlash("error-eliminado","");
+                $this->addFlash("danger", "Error al eliminar el usuario.");
             }
         }
         return $this->redirectToRoute('app_admin_users');
@@ -169,13 +169,13 @@ class UserController extends BaseController
             if ($this->passwordEncoder->isPasswordValid($user, $password)) {
                 $user->setPassword($this->passwordEncoder->encodePassword($user, $newPassword));
             } else {
-                $this->addFlash("error", "Las contraseñas deben ser iguales");
+                $this->addFlash("danger", "Las contraseñas deben ser iguales.");
                 return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
             }
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $this->addFlash("success", "Contraseña actualizada correctamente!");
+            $this->addFlash("success", "Contraseña actualizada correctamente.");
             return $this->redirectToRoute("app_admin_index");
         }
         return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
