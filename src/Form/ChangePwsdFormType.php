@@ -25,12 +25,12 @@ class ChangePwsdFormType extends AbstractType
                 "mapped" => false,
                 "constraints" => [
                     new NotBlank(["message" => "El campo no puede estar vacío"]),
-                    new UserPassword(["message" => "Recordar contraseña"])
+                    new UserPassword(["message" => "Contraseña incorecta"])
                 ]
             ])
             ->add("newpassword", RepeatedType::class, [
                 "mapped" => false,
-                'invalid_message' => "Las contraseñas deben ser idénticas",
+                'invalid_message' => "Las nuevas contraseñas deben coincidir",
                 "type" => PasswordType::class,
                 "constraints" => [
                     new NotBlank(["message" => "El campo no puede estar vacío"])
