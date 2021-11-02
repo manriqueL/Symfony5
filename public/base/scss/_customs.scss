@@ -30,3 +30,13 @@ $color-letra-top-menu: black !important;
 .table, .table-hover tbody tr:hover{
   color: black;
 }
+.cardToLogin{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.inputLoggin{
+  text-align: center;
+  border-radius: 50px;
+}

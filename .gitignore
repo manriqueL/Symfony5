@@ -21,3 +21,5 @@
 /public/base/node_modules
 /public/base/package-lock.json
 composer.lock
+/public/base/css/sb-admin-2.css
+/public/base/css/sb-admin-2.min.css
