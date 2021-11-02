@@ -42,8 +42,7 @@ class UserRepository extends ServiceEntityRepository
 
     public function findForActionIndex($filtro = [])
     {
-      $qb = $this->createQueryBuilder('e')
-            ->orderBy("e.id", "ASC");
+      $qb = $this->createQueryBuilder('e');
 
       if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
         $qb
