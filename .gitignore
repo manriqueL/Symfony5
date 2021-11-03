@@ -23,3 +23,6 @@
 composer.lock
 /public/base/css/sb-admin-2.css
 /public/base/css/sb-admin-2.min.css
+/public/.htaccess
+/public/error_log
+symfony.lock
