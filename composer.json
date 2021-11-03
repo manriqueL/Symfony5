@@ -38,6 +38,9 @@
         "preferred-install": {
             "*": "dist"
         },
+        "platform": {
+            "php": "7.4.0"
+        },
         "sort-packages": true
     },
     "autoload": {
