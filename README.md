@@ -1,7 +1,8 @@
 
 ## Requisitos para instalar el proyecto en local
 1. Tener instalado Node en versión >= 12.13.0 (node --version para ver la versión actual instalada).
-2. Tener PHP > 7.2
+2. Tener PHP > 7.4
+3. Tener instalado gulp (npm install -g gulp)
 
 
 ## Setup nuevo proyecto
