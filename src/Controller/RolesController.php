@@ -60,7 +60,12 @@ class RolesController extends BaseController
      * @IsGranted("ROLES_VER")
      */
     public function show(Request $request, Role $rol)
-    {    
+    {
+        /* Niega el acceso a ver info der rol superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($rol)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("index_roles");
+        }
         return $this->render('admin/roles/show.html.twig', [
             'rol' => $rol
         ]);
@@ -74,8 +79,18 @@ class RolesController extends BaseController
         $form = $this->createForm(RoleFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()){            
             $rol = $form->getData();
+
+            /* Validación de que no exista un rol con ese nombre */
+            if($this->rolesRepository->findByName($rol->getRoleName())){
+                $this->addFlash("danger","Ya existe un rol con ese nombre.");
+                return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
+            }elseif(str_contains("ROLE_SUPERUSER", $this->rolesRepository->findAll())){
+                $this->addFlash("danger","No puede utilizar este nombre en el rol.");
+                return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
+            }
+
             $this->entityManager->persist($rol);
             $this->entityManager->flush();
             $this->addFlash("success","Rol creado correctamente.");
@@ -90,9 +105,23 @@ class RolesController extends BaseController
      * @IsGranted("ROLES_EDITAR")
      */
     public function edit(Role $rol, Request $request){
+
+        /* Niega el acceso a ver info der rol superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($rol)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("index_roles");
+        }
+
         $form = $this->createForm(RoleFormType::class,$rol);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            
+            /* Validación de que no exista un rol con ese nombre */
+            if($this->rolesRepository->findRepetido($rol)){
+                $this->addFlash("danger","Ya existe un rol con ese nombre.");
+                return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
+            }
+
             $this->entityManager->persist($rol);
             $this->entityManager->flush();
             $this->addFlash("success","Rol modificado correctamente.");
@@ -106,6 +135,13 @@ class RolesController extends BaseController
      * @IsGranted("ROLES_ELIMINAR")
      */
     public function delete(Request $request, Role $rol){
+
+        /* Niega el acceso a ver info der rol superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($rol)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("index_roles");
+        }
+
         if ($this->isCsrfTokenValid('delete'.$rol->getId(), $request->request->get('_token'))) {
             $resp = $this->rolesRepository->delete($rol);
             if($resp === true){
@@ -115,6 +151,14 @@ class RolesController extends BaseController
             }
         }
         return $this->redirectToRoute('index_roles');          
+    }
+
+    private function actionOnSuperUser(Role $rol){
+        if($rol->getRoleName() == "ROLE_SUPERUSER" && $this->getUser()->getRoles()[0] != "ROLE_SUPERUSER"){
+           return false;
+        }else{
+            return true;
+        }
     }
     
 }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,11 +18,13 @@ class UserRepository extends ServiceEntityRepository
 {
 
     private $entityManager;
+    private $roleRepository;
 
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, RoleRepository $roleRepository)
     {
         parent::__construct($registry, User::class);
         $this->entityManager = $entityManager;
+        $this->roleRepository = $roleRepository;
     }
 
     public function saveUser($user):User
@@ -42,7 +45,9 @@ class UserRepository extends ServiceEntityRepository
 
     public function findForActionIndex($filtro = [])
     {
-      $qb = $this->createQueryBuilder('e');
+      $qb = $this->createQueryBuilder('e')
+          ->andWhere("e.roles NOT LIKE :AdminRole")
+          ->setParameter("AdminRole", '%ROLE_SUPERUSER%');
 
       if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
         $qb
@@ -67,10 +72,6 @@ class UserRepository extends ServiceEntityRepository
     }
 
     public function delete(User $user){
-        /* $user->setDeleted(true);
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-        return $user; */
         try {
             $this->entityManager->remove($user);
             $this->entityManager->flush();
@@ -88,5 +89,18 @@ class UserRepository extends ServiceEntityRepository
       $this->entityManager->persist($user);
       $this->entityManager->flush();
       return $user;
-  }
+    }
+    
+    public function findRepetido($value): ?User
+    {
+      $email = $value->getEmail();
+      $id = $value->getId();
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email = :email')
+            ->andWhere('u.id != :id')
+            ->setParameter('email', $email)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

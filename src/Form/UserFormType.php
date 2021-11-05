@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Role;
 use App\Entity\User;
+use App\Repository\RoleRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -61,7 +62,10 @@ class UserFormType extends AbstractType
                 "mapped" => false,
                 "class" => Role::class,
                 "required" => true,
-                "placeholder" => $this->translator->trans('backend.role.choice_role'),
+                "placeholder" => "Seleccione un rol",
+                'query_builder' => function (RoleRepository $roleRepository) {
+                    return $roleRepository->findExceptAdmin();
+                },
                 "constraints" => [
                     new NotBlank(["message" => "El campo no puede estar vacío"])
                 ]

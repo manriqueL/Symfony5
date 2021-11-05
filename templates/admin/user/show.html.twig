@@ -71,9 +71,13 @@
               <th width="150" class="text-right">Role:</th>                            
               {% if user.roles %}
                 <td>
-                  <a href="{{ path('show_role',{"id": role.id}) }}">
+                  {% if role.getRoleName == "ROLE_SUPERUSER" %}
                     {{ role.getRoleName }}
-                  </a>
+                  {% else %}
+                    <a href="{{ path('show_role',{"id": role.id}) }}">
+                      {{ role.getRoleName }}
+                    </a>
+                  {% endif %}
                 </td>
               {% else %}
                 <td>Sin roles asignados</td>
@@ -84,7 +88,7 @@
 
       <a class="btn btn-sm btn-warning float-right text-dark ml-2" href="{{ path('change_user_passwd', {"id":user.id}) }}">
         <i class="fas fa-sync"></i> &nbsp; Cambiar Contraseña
-      </a>      
+      </a>
       <a class="btn btn-sm btn-danger float-right" href="{{ path('app_admin_changevalidite_user', {"id":user.id}) }}">
         <i class="fas fa-exclamation-circle"></i> &nbsp; {% if user.suspended %}Quitar suspensión{% else %}Suspender{% endif %}
       </a>

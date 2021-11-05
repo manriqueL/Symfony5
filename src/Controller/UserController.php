@@ -73,12 +73,18 @@ class UserController extends BaseController
      * @IsGranted("USERS_VER")
      */
     public function show(Request $request, User $user)
-    {    
+    {
+        /* Niega el acceso a ver info de un superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($user)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("app_admin_users");
+        }
+        
         $role = $this->roleRepository->findByName($user->getRoles()[0]);
         return $this->render('admin/user/show.html.twig', [
             'user' => $user,
             'role' => $role
-        ]);
+        ]);                
     }
 
     /**
@@ -91,6 +97,13 @@ class UserController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+
+            /* Validación de que no exista un user con ese email */
+            if($this->userRepository->findOneByUsernameOrEmail($user->getEmail())){
+                $this->addFlash("danger","Ya existe un usuario con ese email.");
+                return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
+            }
+
             $password = $form["justpassword"]->getData();
             $role = $form["role"]->getData();
             $user->setSuspended(false)
@@ -111,11 +124,22 @@ class UserController extends BaseController
      */
     public function editUser(User $user, Request $request, TranslatorInterface $translator)
     {
+        /* Niega el acceso a ver info de un superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($user)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("app_admin_users");
+        }
+
         $form = $this->createForm(UserFormType::class, $user, ["translator" => $translator]);        
         $therole = $this->roleRepository->findOneBy(["roleName" => $user->getRoles()[0]]);
         $form->get('role')->setData($therole);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /* Validación de que no exista un user con ese email */
+            if($this->userRepository->findRepetido($user)){
+                $this->addFlash("danger","Ya existe un usuario con ese email.");
+                return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
+            }
             $role = $form["role"]->getData();
             $user->setRoles([$role->getRoleName()]);            
             $this->entityManager->persist($user);
@@ -132,6 +156,12 @@ class UserController extends BaseController
      */
     public function activate(User $user)
     {
+        /* Niega el acceso a ver info de un superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($user)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("app_admin_users");
+        }
+
         $user = $this->userRepository->changeValidite($user);
         return $this->redirectToRoute("show_user", ['id' => $user->getId()]);
     }
@@ -142,6 +172,12 @@ class UserController extends BaseController
      */
     public function delete(Request $request, User $user)
     {
+        /* Niega el acceso a ver info de un superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($user)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("app_admin_users");
+        }
+
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $resp = $this->userRepository->delete($user);
             if($resp === true){
@@ -176,7 +212,7 @@ class UserController extends BaseController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash("success", "Contraseña actualizada correctamente.");
-            return $this->redirectToRoute("app_admin_index");
+            return $this->redirectToRoute("inicio_index");
         }
         return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
     }
@@ -187,6 +223,12 @@ class UserController extends BaseController
      */
     public function changeUserPasswd(Request $request, User $user)
     {
+        /* Niega el acceso a ver info de un superuser sin ser superuser */
+        if(!$this->actionOnSuperUser($user)){
+            $this->addFlash("danger", "No tienes suficientes permiso para realizar esa acción.");
+            return $this->redirectToRoute("app_admin_users");
+        }
+
         $form = $this->createForm(ChangeUserPasswdFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -207,4 +249,11 @@ class UserController extends BaseController
         return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
     }
 
+    private function actionOnSuperUser(User $user){
+        if($user->getRoles()[0] == "ROLE_SUPERUSER" && $this->getUser()->getRoles()[0] != "ROLE_SUPERUSER"){
+           return false;
+        }else{
+            return true;
+        }
+    }
 }

@@ -17,14 +17,21 @@ class RoleRepository extends ServiceEntityRepository
         $this->entityManager = $entityManager;
     }
 
+    public function findAll(){
+      $qb = $this->createQueryBuilder('e');
+      return $qb->getQuery()->getResult();
+    }
+
     public function findForActionIndex($filtro = [])
     {
       $qb = $this->createQueryBuilder('e')
+            ->andWhere("e.roleName != 'ROLE_SUPERUSER'")
             ->orderBy("e.id", "ASC");
 
       if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
         $qb
           ->andWhere("e.roleName LIKE :nombre")
+          ->andWhere("e.roleName != 'ROLE_SUPERUSER'")
           ->setParameter("nombre", '%'.$filtro["nombre"].'%')
         ;
       }
@@ -50,5 +57,27 @@ class RoleRepository extends ServiceEntityRepository
         } catch (\Exception $e) {
             return $e;
         }
+    }
+
+    public function findExceptAdmin(){
+      $qb = $this->createQueryBuilder('r')
+        ->andWhere("r.roleName != 'ROLE_SUPERUSER'")
+        ->orderBy('r.roleName', 'ASC')
+      ;
+
+      return $qb;
+    }
+
+    public function findRepetido($value): ?Role
+    {
+      $roleName = $value->getRoleName();
+      $id = $value->getId();
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roleName = :roleName')
+            ->andWhere('u.id != :id')
+            ->setParameter('roleName', $roleName)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
