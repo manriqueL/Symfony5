@@ -290,4 +290,8 @@ class User implements UserInterface, EquatableInterface
     {
         return $this->deleted;
     }
+
+    public function isSuperAdmin(){
+        return $this->roles[0] == 'ROLE_SUPERUSER' ? true : false;
+    }
 }

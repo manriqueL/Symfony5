@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use App\Repository\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,12 +20,14 @@ class UserRepository extends ServiceEntityRepository
 
     private $entityManager;
     private $roleRepository;
+    private $security;
 
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, RoleRepository $roleRepository)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, RoleRepository $roleRepository, Security $security)
     {
         parent::__construct($registry, User::class);
         $this->entityManager = $entityManager;
         $this->roleRepository = $roleRepository;
+        $this->security = $security;
     }
 
     public function saveUser($user):User
@@ -44,10 +47,13 @@ class UserRepository extends ServiceEntityRepository
     }
 
     public function findForActionIndex($filtro = [])
-    {
-      $qb = $this->createQueryBuilder('e')
-          ->andWhere("e.roles NOT LIKE :AdminRole")
-          ->setParameter("AdminRole", '%ROLE_SUPERUSER%');
+    {      
+      $qb = $this->createQueryBuilder('e');
+      if (!$this->security->getUser()->isSuperAdmin()){
+        $qb
+        ->andWhere("e.roles NOT LIKE :AdminRole")
+        ->setParameter("AdminRole", '%ROLE_SUPERUSER%');
+      }
 
       if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
         $qb

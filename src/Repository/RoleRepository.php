@@ -31,7 +31,6 @@ class RoleRepository extends ServiceEntityRepository
       if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
         $qb
           ->andWhere("e.roleName LIKE :nombre")
-          ->andWhere("e.roleName != 'ROLE_SUPERUSER'")
           ->setParameter("nombre", '%'.$filtro["nombre"].'%')
         ;
       }

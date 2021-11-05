@@ -4,6 +4,12 @@
 2. Tener PHP > 7.4
 3. Tener instalado gulp (npm install -g gulp)
 
+## Tener en cuenta
+1. El template funciona con roles.
+2. Al seguir los pasos de abajo, se crea un usuario con el rol ROLE_SUPERUSER.
+3. No es posible crear nuevos usuarios con dicho rol (a menos que sea por base de datos).
+4. Ningún otro usuario podrá modificar, ver o eliminar datos de la cuenta con el rol ROLE_SUPERUSER.
+5. No es posible crear un nuevo rol que contenga el string "ROLE_SUPERUSER".
 
 ## Setup nuevo proyecto
 1. Ejecutar en la consola: cd public/base
@@ -11,11 +17,11 @@
 3. gulp css
 4. Crear la base de datos local
 5. **Copiar** el archivo .env.example a .env y adaptar los parámetros para la conexión mysql
-6. composer require "ext-gd:*" --ignore-platform-reqs
+6. composer install
 7. php bin/console doctrine:schema:create
 8. php bin/console doctrine:fixtures:load
 9. symfony server:start
-10. Abrir navegador en la dirección localhost:8000/admin
+10. Abrir navegador en la dirección localhost:8000
 11. Loguear con credenciales: admin/admin
 12. Ir al menú lateral izquierdo -> Administrar -> Roles -> ROLE_SUPERUSER y asignarle todos los permisos necesarios
 

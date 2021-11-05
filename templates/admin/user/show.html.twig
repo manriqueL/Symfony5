@@ -71,7 +71,7 @@
               <th width="150" class="text-right">Role:</th>                            
               {% if user.roles %}
                 <td>
-                  {% if role.getRoleName == "ROLE_SUPERUSER" %}
+                  {% if role.getRoleName == "ROLE_SUPERUSER" and not user.isSuperAdmin %}
                     {{ role.getRoleName }}
                   {% else %}
                     <a href="{{ path('show_role',{"id": role.id}) }}">

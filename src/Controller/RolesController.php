@@ -81,13 +81,16 @@ class RolesController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()){            
             $rol = $form->getData();
+            $nombreFinal = explode(' ', strtoupper($rol->getRoleName()));
+            $nombreFinal = implode("_", $nombreFinal);
+            $rol->setRoleName($nombreFinal);
 
             /* Validación de que no exista un rol con ese nombre */
-            if($this->rolesRepository->findByName($rol->getRoleName())){
+            if($this->rolesRepository->findByName($nombreFinal)){
                 $this->addFlash("danger","Ya existe un rol con ese nombre.");
                 return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
-            }elseif(str_contains("ROLE_SUPERUSER", $this->rolesRepository->findAll())){
-                $this->addFlash("danger","No puede utilizar este nombre en el rol.");
+            }elseif(str_contains($nombreFinal,"ROLE_SUPERUSER")){
+                $this->addFlash("danger","No es posible utilizar este nombre de rol.");
                 return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
             }
 
@@ -116,9 +119,16 @@ class RolesController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             
+            $nombreFinal = explode(' ', strtoupper($rol->getRoleName()));
+            $nombreFinal = implode("_", $nombreFinal);
+            $rol->setRoleName($nombreFinal);
+
             /* Validación de que no exista un rol con ese nombre */
             if($this->rolesRepository->findRepetido($rol)){
                 $this->addFlash("danger","Ya existe un rol con ese nombre.");
+                return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
+            }elseif(str_contains($nombreFinal,"ROLE_SUPERUSER")){
+                $this->addFlash("danger","No es posible utilizar este nombre de rol.");
                 return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
             }
 
