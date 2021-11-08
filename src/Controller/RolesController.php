@@ -132,8 +132,14 @@ class RolesController extends BaseController
                 return $this->render("admin/roles/new.html.twig", ["form"=>$form->createView()]);
             }
 
+            /* Modifica los roles de los usuarios que lo contienen */
+            foreach($rol->getUsuarios() as $user){
+                $user->setRoles([$nombreFinal]);
+            }
+
             $this->entityManager->persist($rol);
-            $this->entityManager->flush();
+            $this->entityManager->flush();            
+
             $this->addFlash("success","Rol modificado correctamente.");
             return $this->redirectToRoute("index_roles");
         }

@@ -22,6 +22,16 @@ class RoleRepository extends ServiceEntityRepository
       return $qb->getQuery()->getResult();
     }
 
+    public function findUsersByRole($rol)
+    {
+      //dd($rol->getRoleName());
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles = :val')
+            ->setParameter('val', )
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findForActionIndex($filtro = [])
     {
       $qb = $this->createQueryBuilder('e')

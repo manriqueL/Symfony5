@@ -29,9 +29,15 @@ class Role
      */
     private $permisos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="rolActual", cascade={"persist"})
+     */
+    private $usuarios;
+
     public function __construct()
     {
         $this->permisos = new ArrayCollection();
+        $this->usuarios = new ArrayCollection();
     }
 
 
@@ -81,6 +87,36 @@ class Role
             // set the owning side to null (unless already changed)
             if ($permiso->getRole() === $this) {
                 $permiso->setRole(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsuarios(): Collection
+    {
+        return $this->usuarios;
+    }
+
+    public function addUsuario(User $usuario): self
+    {
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios[] = $usuario;
+            $usuario->setRolActual($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuario(User $usuario): self
+    {
+        if ($this->usuarios->removeElement($usuario)) {
+            // set the owning side to null (unless already changed)
+            if ($usuario->getRolActual() === $this) {
+                $usuario->setRolActual(null);
             }
         }
 

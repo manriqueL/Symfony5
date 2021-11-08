@@ -106,10 +106,14 @@ class UserController extends BaseController
 
             $password = $form["justpassword"]->getData();
             $role = $form["role"]->getData();
+            $role = $role->getRoleName();
+            /* Guardamos la entidad del rol para otras funcionalidades */
+            $roleEntity = $this->roleRepository->findByName($role);
             $user->setSuspended(false)
                 ->setDeleted(false)
                 ->setPassword($this->passwordEncoder->encodePassword($user, $password))
-                ->setRoles([$role->getRoleName()]);
+                ->setRoles([$role])
+                ->setRolActual($roleEntity);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash("success", "Usuario creado correctamente.");
@@ -141,7 +145,11 @@ class UserController extends BaseController
                 return $this->render("admin/user/userform.html.twig", ["userForm" => $form->createView()]);
             }
             $role = $form["role"]->getData();
-            $user->setRoles([$role->getRoleName()]);            
+            $role = $role->getRoleName();
+            /* Guardamos la entidad del rol para otras funcionalidades */
+            $roleEntity = $this->roleRepository->findByName($role);
+            $user->setRoles([$role]);
+            $user->setRolActual($roleEntity);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $this->addFlash("success", "Usuario editado correctamente.");

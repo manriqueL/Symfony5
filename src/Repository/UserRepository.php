@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use App\Repository\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,14 +18,12 @@ class UserRepository extends ServiceEntityRepository
 {
 
     private $entityManager;
-    private $roleRepository;
     private $security;
 
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, RoleRepository $roleRepository, Security $security)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, Security $security)
     {
         parent::__construct($registry, User::class);
         $this->entityManager = $entityManager;
-        $this->roleRepository = $roleRepository;
         $this->security = $security;
     }
 

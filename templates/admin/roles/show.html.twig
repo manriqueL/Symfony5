@@ -39,6 +39,9 @@
                 {% if "VER_INICIO" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="VER_INICIO">
                 <label class="form-check-label" for="VER_INICIO">Acceder al inicio</label>
               </div>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseGenerales')">Select All</button>
+              </div>
             </div>
           </div>
         </div>
@@ -90,6 +93,9 @@
                       {% if "USERS_PASSWORD" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="USERS_PASSWORD">
                       <label class="form-check-label" for="USERS_PASSWORD">Cambiar Contraseñas</label>
                     </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseUsuarios')">Select All</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -121,6 +127,9 @@
                       {% if "ROLES_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="ROLES_ELIMINAR">
                       <label class="form-check-label" for="ROLES_ELIMINAR">Eliminar</label>
                     </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseRoles')">Select All</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -151,6 +160,9 @@
                       <input class="form-check-input" name="REPARTICION_ELIMINAR" data-toggle="toggle"
                       {% if "REPARTICION_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="REPARTICION_ELIMINAR">
                       <label class="form-check-label" for="REPARTICION_ELIMINAR">Eliminar</label>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseReparticiones')">Select All</button>
                     </div>
                   </div>
                 </div>
@@ -189,6 +201,9 @@
                 {% if "EJEMPLO2_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="EJEMPLO2_ELIMINAR">
                 <label class="form-check-label" for="EJEMPLO2_ELIMINAR">Permiso ejemplo 4</label>
               </div>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseEjemplo')">Select All</button>
+              </div>
             </div>
           </div>
         </div>
@@ -202,3 +217,19 @@
   </div>
 
 {% endblock rowMain %}
+
+{% block jsBottom %}
+
+<script language="JavaScript">
+  function selectAll(source) {
+    $('#'+ source + ' input[type=checkbox]').each(function() {
+      if($(this).is(':checked')){
+        $(this).prop('checked', false)        
+      }else{
+        $(this).prop('checked', true)
+      }      
+    });
+  }
+</script>
+
+{% endblock %}

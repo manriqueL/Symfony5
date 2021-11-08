@@ -92,6 +92,11 @@ class User implements UserInterface, EquatableInterface
      */
     private $password;   
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users", cascade={"persist"})
+    */
+    protected $rolActual;
+
     public function __construct()
     {
         //
@@ -293,5 +298,17 @@ class User implements UserInterface, EquatableInterface
 
     public function isSuperAdmin(){
         return $this->roles[0] == 'ROLE_SUPERUSER' ? true : false;
+    }
+
+    public function getRolActual(): ?Role
+    {
+        return $this->rolActual;
+    }
+
+    public function setRolActual(?Role $rolActual): self
+    {
+        $this->rolActual = $rolActual;
+
+        return $this;
     }
 }
