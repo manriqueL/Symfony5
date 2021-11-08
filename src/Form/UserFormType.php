@@ -64,7 +64,7 @@ class UserFormType extends AbstractType
                 "required" => true,
                 "placeholder" => "Seleccione un rol",
                 'query_builder' => function (RoleRepository $roleRepository) {
-                    return $roleRepository->findExceptAdmin();
+                    return $roleRepository->findForActionIndex();
                 },
                 "constraints" => [
                     new NotBlank(["message" => "El campo no puede estar vacío"])

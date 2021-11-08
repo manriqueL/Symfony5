@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Role;
+use Symfony\Component\Security\Core\Security;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -10,11 +11,13 @@ use Doctrine\Persistence\ManagerRegistry;
 class RoleRepository extends ServiceEntityRepository
 {
     private $entityManager;
+    private $security;
 
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, Security $security)
     {
         parent::__construct($registry, Role::class);
         $this->entityManager = $entityManager;
+        $this->security = $security;
     }
 
     public function findAll(){
@@ -22,21 +25,14 @@ class RoleRepository extends ServiceEntityRepository
       return $qb->getQuery()->getResult();
     }
 
-    public function findUsersByRole($rol)
-    {
-      //dd($rol->getRoleName());
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.roles = :val')
-            ->setParameter('val', )
-            ->getQuery()
-            ->getResult();
-    }
-
     public function findForActionIndex($filtro = [])
     {
-      $qb = $this->createQueryBuilder('e')
-            ->andWhere("e.roleName != 'ROLE_SUPERUSER'")
-            ->orderBy("e.id", "ASC");
+      $qb = $this->createQueryBuilder('e');
+      if (!$this->security->getUser()->isSuperAdmin()){
+        $qb
+        ->andWhere("e.roleName != 'ROLE_SUPERUSER'")
+        ->orderBy("e.id", "ASC");
+      }
 
       if(isset($filtro["nombre"]) && $filtro["nombre"] != '') {
         $qb
