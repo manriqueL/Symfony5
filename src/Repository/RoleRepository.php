@@ -64,15 +64,6 @@ class RoleRepository extends ServiceEntityRepository
         }
     }
 
-    public function findExceptAdmin(){
-      $qb = $this->createQueryBuilder('r')
-        ->andWhere("r.roleName != 'ROLE_SUPERUSER'")
-        ->orderBy('r.roleName', 'ASC')
-      ;
-
-      return $qb;
-    }
-
     public function findRepetido($value): ?Role
     {
       $roleName = $value->getRoleName();
