@@ -1,25 +1,30 @@
-{% extends 'security/login.html.twig' %}
+{% extends 'base/index-alone.html.twig' %}
 
-{% block title %}Recuperación de contraseña
-{% endblock %}
-{% block bodyclass %}class="login"
-{% endblock %}
-{% block body %}
-	<div class="login_wrapper">
-			<div class="login_form_header">
-				<div class="isologotipo">
-					<h2>{{ site_name }}</h2>
+{% block title %}Recuperación de contraseña{% endblock %}
+
+{% block contenido %}
+	<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center text-center" style="overflow: auto;">
+		<div class="row w-25" style="min-width:400px; height: 300px;">
+			<div class="d-none d-md-none d-lg-block col-lg-4 pr-1 pl-0">
+				<div class="card h-100">
+					<div class="card-body cardToLogin">
+						<img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="100">
+						<p style="font-size: 0.8rem;">
+							©{{ "now"|date("Y") }} </br> Tribunal Superior de Justicia
+						</p>
+					</div>
 				</div>
 			</div>
-		<div class="animate form login_form">
-			<section class="login_content">
-			
-				<h1>Reset your password</h1>
-				{{ form_start(resetForm) }}
-				{{ form_row(resetForm.plainPassword) }}
-				<button class="btn btn-primary">Reset password</button>
-				{{ form_end(resetForm) }}
-			</section>
+			<div class="col-md-12 col-lg-8 pl-0 pr-0">
+				<div class="card h-100">
+					<h5 class="mt-4 mb-2" style="color: black;font-weight: 600;">{{ site_name }}</h5>	
+					{{ form_start(resetForm) }}
+						{{ form_row(resetForm.plainPassword) }}
+						<button class="btn btn-primary">Reset password</button>
+					{{ form_end(resetForm) }}
+				</div>
+			</div>
+			</div>
 		</div>
 	</div>
 {% endblock %}
