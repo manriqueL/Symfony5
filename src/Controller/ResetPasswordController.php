@@ -156,7 +156,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('no-reply@uva3.com', 'GRB'))
+            ->from(new Address('email@juslarioja.gov.ar', 'Tribunal Superior de Justicia'))
             ->to($user->getEmail())
             ->subject('Reinicio de contraseña TSJ')
             ->htmlTemplate('reset_password/email.html.twig')
@@ -165,6 +165,8 @@ class ResetPasswordController extends AbstractController
                 'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
             ])
         ;
+
+        //dd($email);
 
         $mailer->send($email);
 
