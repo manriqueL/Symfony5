@@ -8,7 +8,9 @@
 			<div class="d-none d-md-none d-lg-block col-lg-4 pr-1 pl-0">
 				<div class="card h-100">
 					<div class="card-body cardToLogin">
-						<img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="100">
+						<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('inicio_index') }}">
+							<img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="100">
+						</a>
 						<p style="font-size: 0.8rem;">
 							©{{ "now"|date("Y") }} </br> Tribunal Superior de Justicia
 						</p>
@@ -17,7 +19,7 @@
 			</div>
 			<div class="col-md-12 col-lg-8 pl-0 pr-0">
 				<div class="card h-100">
-					<h5 class="mt-4 mb-2" style="color: black;font-weight: 600;">{{ site_name }}</h5>	
+					<h5 class="mt-4 mb-2" style="color: black;font-weight: 600;">{{ site_name }}</h5>
 					<div class="card-body pt-0">											
 						{{ form_start(requestForm) }}
 							{{ form_row(requestForm.email) }}				
@@ -25,6 +27,14 @@
 							<button class="btn btn-outline-dark btn-success-full submit">Enviar</button>
 						{{ form_end(requestForm) }}
 					</div>
+					{% for message in app.flashes('reset_password_error') %}
+						<div class="alert alert-danger alert-dismissible fade show">
+							{{ message }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					{% endfor %}					
 				</div>
 			</div>
 			</div>

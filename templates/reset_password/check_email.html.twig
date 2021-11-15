@@ -8,7 +8,9 @@
 			<div class="d-none d-md-none d-lg-block col-lg-4 pr-1 pl-0">
 				<div class="card h-100">
 					<div class="card-body cardToLogin">
-						<img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="100">
+						<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('inicio_index') }}">
+							<img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="100">
+						</a>
 						<p style="font-size: 0.8rem;">
 							©{{ "now"|date("Y") }} </br> Tribunal Superior de Justicia
 						</p>
@@ -18,11 +20,14 @@
 			<div class="col-md-12 col-lg-8 pl-0 pr-0">
 				<div class="card h-100">
 					<h5 class="mt-4 mb-2" style="color: black;font-weight: 600;">{{ site_name }}</h5>	
-					<h1>Se ha enviado un correo electrónico que contiene un enlace en el que puede hacer clic para restablecer su contraseña. Este enlace caducará en
-					<b>{{ tokenLifetime|date('g') }}
-					hour(s).</b></h1>
-					<h2 class="sub-recuperar">Si no recibe un correo electrónico, consulte su carpeta de correo no deseado o
-					<a href="{{ path('app_forgot_password_request') }}"><b>intente nuevamente</b></a>.</h2>
+					<p style="font-size:1.2em;">
+						Se ha enviado un correo electrónico que contiene un enlace en el que puede hacer clic para 
+						restablecer su contraseña. Este enlace caducará en <b>{{ tokenLifetime|date('g') }} hora(s).</b>
+					</p>
+					<p class="sub-recuperar">
+						Si no recibe un correo electrónico, consulte su carpeta de correo no deseado o <a href="{{ path('app_forgot_password_request') }}"><b>
+						intente nuevamente</b></a>.
+					</p>
 				</div>
 			</div>
 			</div>

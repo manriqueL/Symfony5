@@ -141,17 +141,15 @@ class ResetPasswordController extends AbstractController
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
-            return $this->redirectToRoute('app_check_email');
+            $this->addFlash('reset_password_error', "El email ingesado no se encuentra registrado.");
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
-                'Ocurrió un error al resetear su password - %s',
-                $e->getReason()
-            ));
-
+            $this->addFlash('reset_password_error', "Ya se emitió un pedido de recuperación del email ingresado.
+                            Compruebe su casilla de correo (incluyendo la sección de spam).");
             return $this->redirectToRoute('app_forgot_password_request');
         }
 
@@ -165,9 +163,7 @@ class ResetPasswordController extends AbstractController
                 'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
             ])
         ;
-
-        //dd($email);
-
+        
         $mailer->send($email);
 
         return $this->redirectToRoute('app_check_email');
