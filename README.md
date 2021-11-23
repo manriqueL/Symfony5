@@ -17,13 +17,14 @@
 3. gulp css
 4. Crear la base de datos local
 5. **Copiar** el archivo .env.example a .env y adaptar los parámetros para la conexión mysql
-6. composer install
-7. php bin/console doctrine:schema:create
-8. php bin/console doctrine:fixtures:load
-9. symfony server:start
-10. Abrir navegador en la dirección localhost:8000
-11. Loguear con credenciales: admin/admin
-12. Ir al menú lateral izquierdo -> Administrar -> Roles -> ROLE_SUPERUSER y asignarle todos los permisos necesarios
+6. cd ../../
+7. composer install
+8. php bin/console doctrine:schema:create
+9. php bin/console doctrine:fixtures:load
+10. symfony server:start
+11. Abrir navegador en la dirección localhost:8000
+12. Loguear con credenciales: admin/admin
+13. Ir al menú lateral izquierdo -> Administrar -> Roles -> ROLE_SUPERUSER y asignarle todos los permisos necesarios
 
 
 ## Modificación de estilos
