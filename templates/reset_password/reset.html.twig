@@ -19,11 +19,13 @@
 			</div>
 			<div class="col-md-12 col-lg-8 pl-0 pr-0">
 				<div class="card h-100">
-					<h5 class="mt-4 mb-2" style="color: black;font-weight: 600;">{{ site_name }}</h5>	
-					{{ form_start(resetForm) }}
-						{{ form_row(resetForm.plainPassword) }}
-						<button class="btn btn-primary">Reset password</button>
-					{{ form_end(resetForm) }}
+					<h5 class="mt-4 mb-2" style="color: black;font-weight: 600;">{{ site_name }}</h5>
+					<div class="w-100">
+						{{ form_start(resetForm) }}
+							{{ form_row(resetForm.plainPassword) }}
+							<button class="btn btn-primary mt-3">Cambiar contraseña</button>
+						{{ form_end(resetForm) }}
+					</div>
 				</div>
 			</div>
 			</div>

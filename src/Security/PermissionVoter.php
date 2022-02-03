@@ -19,7 +19,8 @@ class PermissionVoter extends Voter
         'ADMINISTRACION',
         'ROLES',
         'USERS',
-        'REPARTICION'
+        'REPARTICION',
+        'AREA'
     ];
 
     /* Voter generales */

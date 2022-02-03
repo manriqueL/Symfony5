@@ -1,7 +1,7 @@
 {# Logo Top #}
 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('inicio_index') }}">
     <div class="sidebar-brand-icon">
-        <img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="50">
+        <img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="80">
     </div>
 </a>
 <hr class="sidebar-divider my-0">
@@ -13,60 +13,45 @@
         <span>Home</span>
     </a>
 </li>
-<hr class="sidebar-divider">
-
-<!-- Heading -->
-<div class="sidebar-heading">
-    Ejemplo Sección
-</div>
-
-<!-- Nav Item - Charts -->
-<li class="nav-item">
-    <a class="nav-link" href="#">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Ejemplo simple</span>
-    </a>
-</li>
-
-{# Ejemplo #}
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fas fa-fw fa-wrench"></i>
-        <span>Ejemplo</span>
-    </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Título Ejemplo</h6>
-            <a class="collapse-item" href="#">Ejemplo 1</a>
-            <a class="collapse-item" href="#">Ejemplo 2</a>
-            <a class="collapse-item" href="#">Ejemplo 3</a>
-        </div>
-    </div>
-</li>
+<!-- EJEMPLO -->
+{% if is_granted('EJEMPLO') %}
+    <li class="nav-item">
+        <a class="nav-link" style="line-height: 1;" href="#">
+            <i class="fas fa-globe-americas"></i>
+            <span>Ejemplo</span>
+        </a>
+    </li>
+{% endif %}
+<!-- Expediente -->
 
 <!-- Divider -->
-<hr class="sidebar-divider">
+<hr class="sidebar-divider my-0">
 
-{# Administración #}
-<li class="nav-item {{ currentPath in opciones ? 'active' : '' }}">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-        aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fa fa-cog"></i>
-        <span>Administración</span>
-    </a>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ path('app_admin_users') }}">
-                <i class="fa fa-user text-gray-600"></i> &nbsp; Usuarios
-            </a>
-            <a class="collapse-item" href="{{ path('index_roles') }}">
-                <i class="fa fa-list-alt text-gray-600"></i> &nbsp; Roles
-            </a>
-            <a class="collapse-item" href="{{ path('index_reparticion') }}">
-                <i class="fa fa-bookmark text-gray-600"></i> &nbsp; Reparticiones
-            </a>
+{% if is_granted('ADMINISTRACION') %}
+    {# Administración #}
+    <li class="nav-item {{ currentPath in opciones ? 'active' : '' }}">
+        <a class="nav-link collapsed" data-bs-toggle="collapse" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <i class="fa fa-cog"></i>
+            <span>Administración</span>
+        </a>
+        <div id="collapseTwo" class="collapse">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {% if is_granted('USERS_VER') %}
+                    <a class="collapse-item" href="{{ path('app_admin_users') }}">
+                        <i class="fa fa-user text-gray-600"></i> &nbsp; Usuarios
+                    </a>
+                {% endif %}
+                {% if is_granted('ROLES_VER') %}
+                    <a class="collapse-item" href="{{ path('index_roles') }}">
+                        <i class="fa fa-list-alt text-gray-600"></i> &nbsp; Roles
+                    </a>
+                {% endif %}
+                {% if is_granted('REPARTICION_VER') %}
+                    <a class="collapse-item" href="{{ path('index_reparticion') }}">
+                        <i class="fa fa-bookmark text-gray-600"></i> &nbsp; Reparticiones
+                    </a>
+                {% endif %}
+            </div>
         </div>
-    </div>
-</li>
+    </li>
+{% endif %}

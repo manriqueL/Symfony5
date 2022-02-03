@@ -4,9 +4,11 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h4 mb-0 text-dark"><b>Rol: {{ rol.roleName }}</b></h1>
         <div class="align-items-center justify-content-end">
-          <a href="{{ path('edit_role',{"id":rol.id}) }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fa fa-edit"></i> &nbsp; Editar
-          </a>
+          {% if is_granted('ROLES_EDITAR') %}
+            <a href="{{ path('edit_role',{"id":rol.id}) }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+              <i class="fa fa-edit"></i> &nbsp; Editar
+            </a>
+          {% endif %}
           <a href="{{ path('index_roles') }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fa fa-reply"></i> &nbsp; Ver el listado
           </a>
@@ -24,24 +26,29 @@
       {# Permisos Generales #}
       <div class="col-4">
         <div class="card shadow mb-4">
-          <a href="#collapseGenerales" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseGenerales">
+          <a href="#collapseGenerales" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseGenerales">
             <h6 class="m-0 font-weight-bold text-primary">Permisos Generales</h6>
           </a>
           <div class="collapse" id="collapseGenerales">
             <div class="card-body">
               <div class="form-check form-switch">
-                <input class="form-check-input" name="ADMINISTRACION"
-                {% if "ADMINISTRACION" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="ADMINISTRACION">
+                <input 
+                  class="form-check-input" name="ADMINISTRACION" type="checkbox" id="ADMINISTRACION"
+                  {% if "ADMINISTRACION" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                 <label class="form-check-label" for="ADMINISTRACION">Acceder a la administración</label>
               </div>
               <div class="form-check form-switch">
-                <input class="form-check-input" name="VER_INICIO"
-                {% if "VER_INICIO" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="VER_INICIO">
+                <input class="form-check-input" name="VER_INICIO" type="checkbox" id="VER_INICIO"
+                {% if "VER_INICIO" in rol.getPermisos() %}checked="true"{% endif %}
+                {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                 <label class="form-check-label" for="VER_INICIO">Acceder al inicio</label>
               </div>
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseGenerales')">Select All</button>
-              </div>
+              {% if is_granted('ROLES_EDITAR') %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseGenerales')">Select All</button>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -51,119 +58,139 @@
       {# Permisos de Administración #}
       <div class="col-4">
         <div class="card shadow mb-4">
-          <a href="#collapseAdministracion" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseAdministracion">
+          <a href="#collapseAdministracion" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseAdministracion">
             <h6 class="m-0 font-weight-bold text-primary">Permisos de Administración</h6>
           </a>
           <div class="collapse" id="collapseAdministracion">
             <div class="card-body">
               {# Permisos de Usuarios #}
               <div class="card shadow mb-4">
-                <a href="#collapseUsuarios" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseUsuarios">
+                <a href="#collapseUsuarios" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseUsuarios">
                   <h6 class="m-0 font-weight-bold text-primary">Permisos de Usuarios</h6>
                 </a>
                 <div class="collapse" id="collapseUsuarios">
                   <div class="card-body">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="USERS_CREAR" 
-                      {% if "USERS_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="USERS_CREAR">
+                      <input class="form-check-input" name="USERS_CREAR" type="checkbox" id="USERS_CREAR"
+                      {% if "USERS_CREAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="USERS_CREAR">Crear</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="USERS_VER" 
-                      {% if "USERS_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="USERS_VER">
+                      <input class="form-check-input" name="USERS_VER" type="checkbox" id="USERS_VER"
+                      {% if "USERS_VER" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="USERS_VER">Ver</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="USERS_EDITAR"
-                      {% if "USERS_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="USERS_EDITAR">
+                      <input class="form-check-input" name="USERS_EDITAR" type="checkbox" id="USERS_EDITAR"
+                      {% if "USERS_EDITAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="USERS_EDITAR">Editar</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="USERS_ELIMINAR" 
-                      {% if "USERS_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="USERS_ELIMINAR">
+                      <input class="form-check-input" name="USERS_ELIMINAR" type="checkbox" id="USERS_ELIMINAR"
+                      {% if "USERS_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="USERS_ELIMINAR">Eliminar</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="USERS_ACTIVAR"
-                      {% if "USERS_ACTIVAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="USERS_ACTIVAR">
+                      <input class="form-check-input" name="USERS_ACTIVAR" type="checkbox" id="USERS_ACTIVAR"
+                      {% if "USERS_ACTIVAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="USERS_ACTIVAR">Activar/Desactivar Cuentas</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="USERS_PASSWORD"
-                      {% if "USERS_PASSWORD" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="USERS_PASSWORD">
+                      <input class="form-check-input" name="USERS_PASSWORD" type="checkbox" id="USERS_PASSWORD"
+                      {% if "USERS_PASSWORD" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="USERS_PASSWORD">Cambiar Contraseñas</label>
                     </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseUsuarios')">Select All</button>
-                    </div>
+                    {% if is_granted('ROLES_EDITAR') %}
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseUsuarios')">Select All</button>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
               {# Fin Permisos de Usuarios #}
               {# Permisos de Roles #}
               <div class="card shadow mb-4">
-                <a href="#collapseRoles" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseRoles">
+                <a href="#collapseRoles" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseRoles">
                   <h6 class="m-0 font-weight-bold text-primary">Permisos de Roles</h6>
                 </a>
                 <div class="collapse" id="collapseRoles">
                   <div class="card-body">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="ROLES_CREAR"
-                      {% if "ROLES_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="ROLES_CREAR">
+                      <input class="form-check-input" name="ROLES_CREAR" type="checkbox" id="ROLES_CREAR"
+                      {% if "ROLES_CREAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="ROLES_CREAR">Crear</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="ROLES_VER"
-                      {% if "ROLES_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="ROLES_VER">
+                      <input class="form-check-input" name="ROLES_VER" type="checkbox" id="ROLES_VER"
+                      {% if "ROLES_VER" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="ROLES_VER">Ver</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="ROLES_EDITAR"
-                      {% if "ROLES_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="ROLES_EDITAR">
+                      <input class="form-check-input" name="ROLES_EDITAR" type="checkbox" id="ROLES_EDITAR"
+                      {% if "ROLES_EDITAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="ROLES_EDITAR">Editar</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="ROLES_ELIMINAR"
-                      {% if "ROLES_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="ROLES_ELIMINAR">
+                      <input class="form-check-input" name="ROLES_ELIMINAR" type="checkbox" id="ROLES_ELIMINAR"
+                      {% if "ROLES_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="ROLES_ELIMINAR">Eliminar</label>
                     </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseRoles')">Select All</button>
-                    </div>
+                    {% if is_granted('ROLES_EDITAR') %}
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseRoles')">Select All</button>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
               {# Fin Permisos de Roles #}
               {# Permisos de Reparticiones #}
               <div class="card shadow mb-4">
-                <a href="#collapseReparticiones" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseReparticiones">
+                <a href="#collapseReparticiones" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseReparticiones">
                   <h6 class="m-0 font-weight-bold text-primary">Permisos de Reparticiones</h6>
                 </a>
                 <div class="collapse" id="collapseReparticiones">
                   <div class="card-body">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="REPARTICION_CREAR"
-                      {% if "REPARTICION_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="REPARTICION_CREAR">
+                      <input class="form-check-input" name="REPARTICION_CREAR" type="checkbox" id="REPARTICION_CREAR"
+                      {% if "REPARTICION_CREAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="REPARTICION_CREAR">Crear</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="REPARTICION_VER"
-                      {% if "REPARTICION_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="REPARTICION_VER">
+                      <input class="form-check-input" name="REPARTICION_VER" type="checkbox" id="REPARTICION_VER"
+                      {% if "REPARTICION_VER" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="REPARTICION_VER">Ver</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="REPARTICION_EDITAR"
-                      {% if "REPARTICION_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="REPARTICION_EDITAR">
+                      <input class="form-check-input" name="REPARTICION_EDITAR" type="checkbox" id="REPARTICION_EDITAR"
+                      {% if "REPARTICION_EDITAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="REPARTICION_EDITAR">Editar</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" name="REPARTICION_ELIMINAR" data-toggle="toggle"
-                      {% if "REPARTICION_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="REPARTICION_ELIMINAR">
+                      <input class="form-check-input" name="REPARTICION_ELIMINAR" data-toggle="toggle" type="checkbox" id="REPARTICION_ELIMINAR"
+                      {% if "REPARTICION_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %}
+                      {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
                       <label class="form-check-label" for="REPARTICION_ELIMINAR">Eliminar</label>
                     </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseReparticiones')">Select All</button>
-                    </div>
+                    {% if is_granted('ROLES_EDITAR') %}
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseReparticiones')">Select All</button>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -173,46 +200,149 @@
         </div>
       </div>
       {# Fin Permisos de Administración #}
-      {# Permisos de Ejemplo #}
+
+      {# Permisos Específicos #}
       <div class="col-4">
-        <div class="card shadow mb-4">
-          <a href="#collapseEjemplo" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEjemplo">
-            <h6 class="m-0 font-weight-bold text-primary">Permisos de Ejemplo</h6>
-          </a>
-          <div class="collapse" id="collapseEjemplo">
-            <div class="card-body">
-              <div class="form-check form-switch">
-                <input class="form-check-input" name="EJEMPLO2_CREAR"
-                {% if "EJEMPLO2_CREAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="EJEMPLO2_CREAR">
-                <label class="form-check-label" for="EJEMPLO2_CREAR">Permiso ejemplo 1</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" name="EJEMPLO2_VER"
-                {% if "EJEMPLO2_VER" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="EJEMPLO2_VER">
-                <label class="form-check-label" for="EJEMPLO2_VER">Permiso ejemplo 2</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" name="EJEMPLO2_EDITAR"
-                {% if "EJEMPLO2_EDITAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="EJEMPLO2_EDITAR">
-                <label class="form-check-label" for="EJEMPLO2_EDITAR">Permiso ejemplo 3</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" name="EJEMPLO2_ELIMINAR"
-                {% if "EJEMPLO2_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %} type="checkbox" id="EJEMPLO2_ELIMINAR">
-                <label class="form-check-label" for="EJEMPLO2_ELIMINAR">Permiso ejemplo 4</label>
-              </div>
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseEjemplo')">Select All</button>
+        {# Permisos Áreas #}
+        <div class="col">
+          <div class="card shadow mb-4">
+            <a href="#collapseArea" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseArea">
+              <h6 class="m-0 font-weight-bold text-primary">Permisos de Áreas</h6>
+            </a>
+            <div class="collapse" id="collapseArea">
+              <div class="card-body">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="AREA_CREAR" type="checkbox" id="AREA_CREAR"
+                  {% if "AREA_CREAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="AREA_CREAR">Crear</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="AREA_VER" type="checkbox" id="AREA_VER"
+                  {% if "AREA_VER" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="AREA_VER">Ver</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="AREA_EDITAR" type="checkbox" id="AREA_EDITAR"
+                  {% if "AREA_EDITAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="AREA_EDITAR">Editar</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="AREA_ELIMINAR" data-toggle="toggle" type="checkbox" id="AREA_ELIMINAR"
+                  {% if "AREA_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="AREA_ELIMINAR">Eliminar</label>
+                </div>
+                {% if is_granted('ROLES_EDITAR') %}
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseArea')">Select All</button>
+                  </div>
+                {% endif %}
               </div>
             </div>
           </div>
         </div>
+        {# FIN Permisos Áreas #}
+        {# Permisos Expediente #}
+        <div class="col">
+          <div class="card shadow mb-4">
+            <a href="#collapseExpediente" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseArea">
+              <h6 class="m-0 font-weight-bold text-primary">Permisos de Expedientes</h6>
+            </a>
+            <div class="collapse" id="collapseExpediente">
+              <div class="card-body">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="EXPEDIENTE_CREAR" type="checkbox" id="EXPEDIENTE_CREAR"
+                  {% if "EXPEDIENTE_CREAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="EXPEDIENTE_CREAR">Crear</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="EXPEDIENTE_VER" type="checkbox" id="EXPEDIENTE_VER"
+                  {% if "EXPEDIENTE_VER" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="EXPEDIENTE_VER">Ver</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="EXPEDIENTE_EDITAR" type="checkbox" id="EXPEDIENTE_EDITAR"
+                  {% if "EXPEDIENTE_EDITAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="EXPEDIENTE_EDITAR">Editar</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="EXPEDIENTE_ELIMINAR" data-toggle="toggle" type="checkbox" id="EXPEDIENTE_ELIMINAR"
+                  {% if "EXPEDIENTE_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="EXPEDIENTE_ELIMINAR">Eliminar</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="EXPEDIENTE_PRINT" data-toggle="toggle" type="checkbox" id="EXPEDIENTE_PRINT"
+                  {% if "EXPEDIENTE_PRINT" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="EXPEDIENTE_PRINT">Imprimir carátula/pase</label>
+                </div>
+                {% if is_granted('ROLES_EDITAR') %}
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseExpediente')">Select All</button>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {# FIN Permisos Expediente #}
+        {# Permisos Movimiento #}
+        <div class="col">
+          <div class="card shadow mb-4">
+            <a href="#collapseMovimiento" class="d-block card-header py-3 collapsed" data-bs-toggle="collapse" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseArea">
+              <h6 class="m-0 font-weight-bold text-primary">Permisos de Movimientos</h6>
+            </a>
+            <div class="collapse" id="collapseMovimiento">
+              <div class="card-body">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="MOVIMIENTO_CREAR" type="checkbox" id="MOVIMIENTO_CREAR"
+                  {% if "MOVIMIENTO_CREAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="MOVIMIENTO_CREAR">Crear</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="MOVIMIENTO_VER" type="checkbox" id="MOVIMIENTO_VER"
+                  {% if "MOVIMIENTO_VER" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="MOVIMIENTO_VER">Ver</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="MOVIMIENTO_EDITAR" type="checkbox" id="MOVIMIENTO_EDITAR"
+                  {% if "MOVIMIENTO_EDITAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="MOVIMIENTO_EDITAR">Editar</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="MOVIMIENTO_ELIMINAR" data-toggle="toggle"  type="checkbox" id="MOVIMIENTO_ELIMINAR"
+                  {% if "MOVIMIENTO_ELIMINAR" in rol.getPermisos() %}checked="true"{% endif %}
+                  {% if not is_granted('ROLES_EDITAR') %}disabled{% endif %}>
+                  <label class="form-check-label" for="MOVIMIENTO_ELIMINAR">Eliminar</label>
+                </div>
+                {% if is_granted('ROLES_EDITAR') %}
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-sm btn-primary me-md-2" type="button" onClick="selectAll('collapseMovimiento')">Select All</button>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {# FIN Permisos Movimiento #}
       </div>
-      {# Fin Permisos de Ejemplo #}
+      {# Fin Permisos Específicos #}
     </div>
-      <button class="btn btn-success float-right" type="submit" >
-          Guardar
+      {% if is_granted('ROLES_EDITAR') %}
+        <button class="btn btn-success float-end" type="submit" >
+            Guardar
         </button>
+      {% endif %}
     </form>
   </div>
 
@@ -222,12 +352,9 @@
 
 <script language="JavaScript">
   function selectAll(source) {
+    let first = $('#'+ source + ' input[type=checkbox]')[0].checked;
     $('#'+ source + ' input[type=checkbox]').each(function() {
-      if($(this).is(':checked')){
-        $(this).prop('checked', false)        
-      }else{
-        $(this).prop('checked', true)
-      }      
+      $(this).prop('checked', !first)      
     });
   }
 </script>

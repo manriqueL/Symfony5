@@ -22,7 +22,8 @@ class ReparticionFormType extends AbstractType
         $builder
         ->add("nombre", TextType::class, 
             [
-                "label" => "Nombre"
+                "label" => "Nombre",
+                'empty_data' => ''
             ]);
     }
 

@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -97,9 +98,50 @@ class User implements UserInterface, EquatableInterface
     */
     protected $rolActual;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="users")
+     */
+    private $area;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Movimiento::class, mappedBy="createdBy")
+     */
+    private $movimientos;
+
+    /**
+      * @ORM\Column(type="datetime")
+      * @Gedmo\Timestampable(on="create")
+    */
+    private $createdAt;
+
+    /**
+        * @ORM\Column(type="datetime")
+        * @Gedmo\Timestampable(on="update")
+    */
+    private $updatedAt;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist() {
+        $this->nombre = trim(strtoupper($this->nombre));
+        $this->apellido = trim(strtoupper($this->apellido));
+        $this->direccion = trim(strtoupper($this->direccion));
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate() {
+        $this->nombre = trim(strtoupper($this->nombre));
+        $this->apellido = trim(strtoupper($this->apellido));
+        $this->direccion = trim(strtoupper($this->direccion));
+    }
+
     public function __construct()
     {
         //
+        $this->movimientos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -308,6 +350,72 @@ class User implements UserInterface, EquatableInterface
     public function setRolActual(?Role $rolActual): self
     {
         $this->rolActual = $rolActual;
+
+        return $this;
+    }
+
+    public function getArea(): ?Area
+    {
+        return $this->area;
+    }
+
+    public function setArea(?Area $area): self
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Movimiento[]
+     */
+    public function getMovimientos(): Collection
+    {
+        return $this->movimientos;
+    }
+
+    public function addMovimiento(Movimiento $movimiento): self
+    {
+        if (!$this->movimientos->contains($movimiento)) {
+            $this->movimientos[] = $movimiento;
+            $movimiento->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMovimiento(Movimiento $movimiento): self
+    {
+        if ($this->movimientos->removeElement($movimiento)) {
+            // set the owning side to null (unless already changed)
+            if ($movimiento->getCreatedBy() === $this) {
+                $movimiento->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

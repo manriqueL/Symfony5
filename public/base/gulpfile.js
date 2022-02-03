@@ -50,11 +50,21 @@ function clean() {
 // Bring third party dependencies from node_modules into vendor directory
 function modules() {
   // Bootstrap JS
-  var bootstrapJS = gulp.src('./node_modules/bootstrap/dist/js/*')
+  var bootstrapJS = gulp.src([
+    './node_modules/bootstrap/dist/js/*',
+    './node_modules/bootstrap-datepicker/dist/js/*'
+    ])
     .pipe(gulp.dest('./vendor/bootstrap/js'));
   // Bootstrap SCSS
-  var bootstrapSCSS = gulp.src('./node_modules/bootstrap/scss/**/*')
+  var bootstrapSCSS = gulp.src([
+    './node_modules/bootstrap/scss/**/*',
+    './node_modules/bootstrap-datepicker/css/*',
+    ])
     .pipe(gulp.dest('./vendor/bootstrap/scss'));
+  var bootstrapCSS = gulp.src([
+    './node_modules/bootstrap-datepicker/dist/css/*',
+    ])
+    .pipe(gulp.dest('./vendor/bootstrap/css'));
   // dataTables
   var dataTables = gulp.src([
       './node_modules/datatables.net/js/*.js',
@@ -74,7 +84,7 @@ function modules() {
       '!./node_modules/jquery/dist/core.js'
     ])
     .pipe(gulp.dest('./vendor/jquery'));
-  return merge(bootstrapJS, bootstrapSCSS, dataTables, fontAwesome, jquery, jqueryEasing);
+  return merge(bootstrapJS, bootstrapSCSS, bootstrapCSS, dataTables, fontAwesome, jquery, jqueryEasing);
 }
 
 // CSS task

@@ -4,9 +4,11 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h4 mb-0 text-dark"><b>Usuario ID: {{ user.id }}</b></h1>
         <div class="align-items-center justify-content-end">
-          <a href="{{ path('app_admin_edit_user',{"id":user.id}) }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fa fa-edit"></i> &nbsp; Editar
-          </a>
+          {% if is_granted('USERS_EDITAR') %}
+            <a href="{{ path('app_admin_edit_user',{"id":user.id}) }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+              <i class="fa fa-edit"></i> &nbsp; Editar
+            </a>
+          {% endif %}
           <a href="{{ path('app_admin_users') }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fa fa-reply"></i> &nbsp; Ver el listado
           </a>
@@ -28,70 +30,78 @@
         <tbody>
           {# Nombre #}
             <tr>
-              <th width="150" class="text-right">Nombre:</th>
+              <th width="150" class="text-end">Nombre:</th>
               <td>{{ user.nombre }}</td>
             </tr>
             {# Apellido #}
             <tr>
-              <th width="150" class="text-right">Apellido:</th>
+              <th width="150" class="text-end">Apellido:</th>
               <td>{{ user.apellido }}</td>
             </tr>
             {# Email #}
             <tr>
-              <th width="150" class="text-right">Email:</th>
+              <th width="150" class="text-end">Email:</th>
               <td>{{ user.email }}</td>
             </tr>
             {# Usuario #}
             <tr>
-              <th width="150" class="text-right">Usuario:</th>
+              <th width="150" class="text-end">Usuario:</th>
               <td>{{ user.username }}</td>
             </tr>
             {# DNI #}
             <tr>
-              <th width="150" class="text-right">DNI:</th>
+              <th width="150" class="text-end">DNI:</th>
               <td>{{ user.dni }}</td>
             </tr>
             {# CUIL #}
             <tr>
-              <th width="150" class="text-right">CUIL:</th>
+              <th width="150" class="text-end">CUIL:</th>
               <td>{{ user.cuil }}</td>
             </tr>
             {# Teléfono #}
             <tr>
-              <th width="150" class="text-right">Teléfono:</th>
+              <th width="150" class="text-end">Teléfono:</th>
               <td>{{ user.telefono }}</td>
             </tr>
             {# Dirección #}
             <tr>
-              <th width="150" class="text-right">Dirección:</th>
+              <th width="150" class="text-end">Dirección:</th>
               <td>{{ user.direccion }}</td>
             </tr>
             {# Roles #}                        
             <tr>
-              <th width="150" class="text-right">Role:</th>                            
-              {% if user.roles %}
-                <td>
-                  {% if role.getRoleName == "ROLE_SUPERUSER" and not user.isSuperAdmin %}
-                    {{ role.getRoleName }}
+              <th width="150" class="text-end">Role:</th>
+                {% if is_granted('ROLES_VER') %}
+                  {% if user.roles %}
+                    <td>
+                      {% if role.getRoleName == "ROLE_SUPERUSER" and not user.isSuperAdmin %}
+                        {{ role.getRoleName }}
+                      {% else %}
+                        <a href="{{ path('show_role',{"id": role.id}) }}">
+                          {{ role.getRoleName }}
+                        </a>
+                      {% endif %}
+                    </td>
                   {% else %}
-                    <a href="{{ path('show_role',{"id": role.id}) }}">
-                      {{ role.getRoleName }}
-                    </a>
+                    <td>Sin roles asignados</td>
                   {% endif %}
-                </td>
-              {% else %}
-                <td>Sin roles asignados</td>
-              {% endif %}
+                {% else %}
+                  <td>{{ role.getRoleName }}</td>
+                {% endif %}
             </tr>
         </tbody>
       </table>
 
-      <a class="btn btn-sm btn-warning float-right text-dark ml-2" href="{{ path('change_user_passwd', {"id":user.id}) }}">
-        <i class="fas fa-sync"></i> &nbsp; Cambiar Contraseña
-      </a>
-      <a class="btn btn-sm btn-danger float-right" href="{{ path('app_admin_changevalidite_user', {"id":user.id}) }}">
-        <i class="fas fa-exclamation-circle"></i> &nbsp; {% if user.suspended %}Quitar suspensión{% else %}Suspender{% endif %}
-      </a>
+      {% if is_granted('USERS_PASSWORD') %}
+        <a class="btn btn-sm btn-warning float-end text-dark ms-2" href="{{ path('change_user_passwd', {"id":user.id}) }}">
+          <i class="fas fa-sync"></i> &nbsp; Cambiar Contraseña
+        </a>
+      {% endif %}
+      {% if is_granted('USERS_ACTIVAR') %}
+        <a class="btn btn-sm btn-danger float-end" href="{{ path('app_admin_changevalidite_user', {"id":user.id}) }}">
+          <i class="fas fa-exclamation-circle"></i> &nbsp; {% if user.suspended %}Quitar suspensión{% else %}Suspender{% endif %}
+        </a>
+      {% endif %}
 
     </div>
   </div>

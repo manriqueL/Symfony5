@@ -1,11 +1,12 @@
 /* Colores del Side Menú */
-$background-side-menu: #224abe !important;
+$background-side-menu: #233e81 !important;
 $color-letra-side-menu: white !important;
 $color-letra-side-menu-hover: wheat !important;
 /* Colores del Top Menú */
 $background-top-menu: white !important;
 $color-letra-top-menu: black !important;
-
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1&family=Roboto+Mono:wght@300&family=Source+Sans+Pro&display=swap');
 
 
 .cursorPointer{
@@ -25,7 +26,7 @@ $color-letra-top-menu: black !important;
 }
 .navbar-search{
   color: $color-letra-top-menu;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 .table, .table-hover tbody tr:hover{
   color: black;
@@ -39,4 +40,73 @@ $color-letra-top-menu: black !important;
 .inputLoggin{
   text-align: center;
   border-radius: 50px;
+}
+.btn-primary, .btn-danger, .btn-secondary, .btn-success{
+  color: white !important;
+}
+.datepicker{
+  width: 400px;
+  height: 200px;
+}
+.table-condensed{
+  width: 390px;
+  height: 180px;
+}
+.table-condensed > tbody > tr > td > span{
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.table-hover>tbody>tr:hover>* {
+  color: black !important;
+}
+.month, .year{
+  height: 40px !important;
+}
+.allCenter{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.spaceEven{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.badge{
+  color:red !important;
+}
+#userDropdown::before{
+  display: none;
+}
+thead > tr > th > div > a {
+  color: black !important;
+  text-decoration: none;
+}
+thead > tr > th > div > a:hover {
+  color: #4848e1!important;
+}
+.btn-outline-success:hover{
+  color: white !important;
+}
+fieldset > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1em;
+}
+fieldset > div > select {
+  width: auto !important;
 }

@@ -3,11 +3,13 @@
 {% block headerMain %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark"><b>Lista de reparticiones</b></h1>
-        <div class="align-items-center justify-content-end">
-            <a href="{{ path('new_reparticion') }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fa fa-plus"></i> &nbsp; Nuevo
-        </a>
-        </div>        
+        {% if is_granted('REPARTICION_CREAR') %}
+            <div class="align-items-center justify-content-end">
+                <a href="{{ path('new_reparticion') }}" class="d-md-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="fa fa-plus"></i> &nbsp; Nuevo
+                </a>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -54,12 +56,16 @@
                             <td class="align-middle td-cursor cursorPointer" onClick="window.location='{{ path('show_reparticion',{"id":reparticion.id}) }}'">{{ reparticion.id }}</td>
                             <td class="align-middle td-cursor cursorPointer" onClick="window.location='{{ path('show_reparticion',{"id":reparticion.id}) }}'">{{ reparticion.nombre }}</td>
                             <td class="btn-cell-table align-middle text-center cursorPointer">
-                                <a class="btn btn-primary btn-sm btn-table-margin mt-1 mb-1" alt="Editar" href="{{ path('edit_reparticion',{"id":reparticion.id}) }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a class="btn btn-danger btn-sm btn-table-margin mt-1 mb-1" title="Eliminar registro" href="javascript:void(0)" data-toggle="modal" data-target="#modalEliminar{{reparticion.id}}">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                {% if is_granted('REPARTICION_EDITAR') %}
+                                    <a class="btn btn-primary btn-sm btn-table-margin mt-1 mb-1" alt="Editar" href="{{ path('edit_reparticion',{"id":reparticion.id}) }}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                 {% endif %}
+                                {% if is_granted('REPARTICION_ELIMINAR') %}
+                                    <a class="btn btn-danger btn-sm btn-table-margin mt-1 mb-1" title="Eliminar registro" data-bs-toggle="modal" data-bs-target="#modalEliminar{{reparticion.id}}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                 {% endif %}    
                             </td>
                         </tr>
                     {% endfor %}
@@ -74,7 +80,7 @@
                     {{ pagination.getTotalItemCount }} {{ pagination.getTotalItemCount == 1 ? " registro" : " registros" }} en total
                 </div>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-4 text-end">
                 <div class="d-inline-flex align-items-end">
                     {{ knp_pagination_render(pagination) }}
                 </div>
@@ -86,11 +92,9 @@
 
 {% block modal_content %}
   {% for reparticion in pagination %}
-    <div id="modalEliminar{{ reparticion.id }}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="modalEliminar{{ reparticion.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eliminarReparticion" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
           {{ include('admin/reparticion/_delete_form.html.twig', {'id': reparticion.id }) }}
-        </div>
       </div>
     </div>
   {% endfor %}

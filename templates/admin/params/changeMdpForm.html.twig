@@ -18,8 +18,10 @@
         <div class="card-body">
             {{ form_start(passwordForm) }}
             {{ form_widget(passwordForm) }}
-            <a class="btn btn-secondary" href="{{ path('inicio_index') }}">Cancelar</a>
-            <button type="submit" name="valider" class="btn btn-success">Guardar</button>
+            <div class="mt-2">
+              <a class="btn btn-secondary" href="{{ path('inicio_index') }}">Cancelar</a>
+              <button type="submit" name="valider" class="btn btn-success">Guardar</button>
+            </div>
             {{ form_end(passwordForm) }}
         </div>
     </div>    

@@ -22,7 +22,8 @@ class RoleFormType extends AbstractType
         $builder
         ->add("roleName", TextType::class, 
             [
-                "label" => "Nombre"
+                "label" => "Nombre",
+                'empty_data' => ''
             ]);
     }
 
