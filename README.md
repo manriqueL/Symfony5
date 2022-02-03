@@ -14,17 +14,18 @@
 ## Setup nuevo proyecto
 1. Ejecutar en la consola: cd public/base
 2. npm install
-3. gulp css
-4. Crear la base de datos local
-5. **Copiar** el archivo .env.example a .env y adaptar los parámetros para la conexión mysql
-6. cd ../../
-7. composer install
-8. php bin/console doctrine:schema:create
-9. php bin/console doctrine:fixtures:load
-10. symfony server:start
-11. Abrir navegador en la dirección localhost:8000
-12. Loguear con credenciales: admin/admin
-13. Ir al menú lateral izquierdo -> Administrar -> Roles -> ROLE_SUPERUSER y asignarle todos los permisos necesarios
+3. gulp
+4. gulp css
+5. Crear la base de datos local
+6. **Copiar** el archivo .env.example a .env y adaptar los parámetros para la conexión mysql
+7. cd ../../
+8. composer install
+9. php bin/console doctrine:schema:create
+10. php bin/console doctrine:fixtures:load
+11. symfony server:start
+12. Abrir navegador en la dirección localhost:8000
+13. Loguear con credenciales: admin/admin
+14. Ir al menú lateral izquierdo -> Administrar -> Roles -> ROLE_SUPERUSER y asignarle todos los permisos necesarios
 
 
 ## Modificación de estilos

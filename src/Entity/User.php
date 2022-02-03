@@ -99,16 +99,6 @@ class User implements UserInterface, EquatableInterface
     protected $rolActual;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="users")
-     */
-    private $area;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Movimiento::class, mappedBy="createdBy")
-     */
-    private $movimientos;
-
-    /**
       * @ORM\Column(type="datetime")
       * @Gedmo\Timestampable(on="create")
     */
