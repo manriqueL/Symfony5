@@ -45,13 +45,13 @@ class PermisoController extends BaseController
             if($borrarPermisosViejos === true){
                 $asignarPermisosNuevos = $this->permisoRepository->asignarRoles($role, $arrayPermisos);
                 if($asignarPermisosNuevos === true){
-                    $this->addFlash("success-modificado","");
+                    $this->addFlash("success","Permisos actualizados correctamente.");
                 }else{
-                    $this->addFlash("error-modificado","Error al modificar los permisos. Inténtelo nuevamente");
+                    $this->addFlash("danger","Error al modificar los permisos. Inténtelo nuevamente");
                 }
                 
             }else{
-                $this->addFlash("error-modificado","");
+                $this->addFlash("danger","");
             }
         }
         return $this->redirectToRoute('show_role', ["id"=> $role->getId()]); 
