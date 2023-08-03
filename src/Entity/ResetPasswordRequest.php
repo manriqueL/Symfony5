@@ -1,50 +1,63 @@
 <?php
 
-namespace App\Entity;
+
 
 use Doctrine\ORM\Mapping as ORM;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ResetPasswordRequestRepository")
+ * ResetPasswordRequest
+ *
+ * @ORM\Table(name="reset_password_request", indexes={@ORM\Index(name="IDX_7CE748AA76ED395", columns={"user_id"})})
+ * @ORM\Entity
  */
-class ResetPasswordRequest implements ResetPasswordRequestInterface
+class ResetPasswordRequest
 {
-    use ResetPasswordRequestTrait;
-
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @var string
+     *
+     * @ORM\Column(name="selector", type="string", length=20, nullable=false)
+     */
+    private $selector;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hashed_token", type="string", length=100, nullable=false)
+     */
+    private $hashedToken;
+
+    /**
+     * @var datetime_immutable
+     *
+     * @ORM\Column(name="requested_at", type="datetime_immutable", nullable=false)
+     */
+    private $requestedAt;
+
+    /**
+     * @var datetime_immutable
+     *
+     * @ORM\Column(name="expires_at", type="datetime_immutable", nullable=false)
+     */
+    private $expiresAt;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
     private $user;
 
-    public function __construct(object $user, \DateTimeInterface $expiresAt, string $selector, string $hashedToken)
-    {
-        $this->user = $user;
-        $this->initialize($expiresAt, $selector, $hashedToken);
-    }
 
-    public function getUser(): object
-    {
-        return $this->user;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 }

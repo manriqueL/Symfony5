@@ -1,62 +1,38 @@
 <?php
 
-namespace App\Entity;
-
-use App\Repository\PermisoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PermisoRepository::class)
+ * Permiso
+ *
+ * @ORM\Table(name="permiso", indexes={@ORM\Index(name="IDX_FD7AAB9ED60322AC", columns={"role_id"})})
+ * @ORM\Entity
  */
 class Permiso
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
      */
     private $nombre;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="permisos")
+     * @var \Role
+     *
+     * @ORM\ManyToOne(targetEntity="Role")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     * })
      */
     private $role;
-
-    public function __toString() {
-        return $this->nombre;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }    
- 
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getRole(): ?Role
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Role $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 }
