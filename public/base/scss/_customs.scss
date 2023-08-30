@@ -41,6 +41,7 @@ $color-letra-top-menu: black !important;
   text-align: center;
   border-radius: 50px;
 }
+
 .btn-primary, .btn-danger, .btn-secondary, .btn-success{
   color: white !important;
 }
@@ -96,7 +97,7 @@ thead > tr > th > div > a:hover {
   color: #4848e1!important;
 }
 .btn-outline-success:hover{
-  color: white !important;
+  color: rgb(255, 255, 255) !important;
 }
 fieldset > div {
   display: flex;
