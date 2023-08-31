@@ -3,20 +3,23 @@
 {% block title %}Recuperación de contraseña{% endblock %}
 
 {% block contenido %}
+
 	<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center text-center" style="overflow: auto;">
-		<div class="row w-25" style="min-width:400px; height: 300px;">
+
+		<div class="row w-25" style="min-width:410px; height: 300px;">
 			<div class="d-none d-md-none d-lg-block col-lg-4 pr-1 pl-0">
 				<div class="card h-100">
 					<div class="card-body cardToLogin">
 						<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('inicio_index') }}">
-							<img id="logo-side" class="logo-side" src="{{ asset('base/img/logo.png') }}" alt="TSJ" width="100">
+							<img id="logo-side" class="logo-side" src="{{ asset('base/img/logoutn.png') }}" alt="UTN" width="80">
 						</a>
-						<p style="font-size: 0.8rem;">
-							©{{ "now"|date("Y") }} </br> Tribunal Superior de Justicia
+						<p style="font-size: 0.7rem;">
+							©{{ "now"|date("Y") }} </br>  <b> UTN </b> Facultad Regional </br>La Rioja
 						</p>
 					</div>
 				</div>
 			</div>
+			
 			<div class="col-md-12 col-lg-8 pl-0 pr-0">
 				<div class="card h-100">
 					<h5 class="mt-4 mb-2" style="color: black;font-weight: 600;">{{ site_name }}</h5>
@@ -27,15 +30,19 @@
 							<button class="btn btn-outline-dark btn-success-full submit">Enviar</button>
 						{{ form_end(requestForm) }}
 					</div>
-					{% for message in app.flashes('reset_password_error') %}
-						<div class="alert alert-danger alert-dismissible fade show">
-							{{ message }}
-							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-						</div>
-					{% endfor %}					
+		
 				</div>
+
 			</div>
+
 			</div>
+			{% for message in app.flashes('reset_password_error') %}
+				<div class="alert alert-danger alert-dismissible fade show mt-2 px-8">
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			{% endfor %}
 		</div>
+
 	</div>
 {% endblock %}
