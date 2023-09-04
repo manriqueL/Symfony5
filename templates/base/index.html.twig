@@ -5,7 +5,7 @@
 
         <!-- Sidebar -->
         {% set currentPath = app.request.get('_route') %}
-        {% set opciones = ["app_admin_users", "index_roles", "index_reparticion"] %}
+        {% set opciones = ["app_admin_users", "index_roles", "index_reparticion, index_personal"] %}
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             {# Side Menú #}
             {% include 'base/side-menu.html.twig' %}
@@ -33,6 +33,18 @@
                     {# Content Main #}
                     <div class="row">
                     {% block rowMain %}
+
+
+
+
+
+
+
+
+
+
+
+                        
                     {% endblock %}
                     </div>
 
