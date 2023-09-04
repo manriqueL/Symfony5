@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends BaseController
 {
-
+    
     /* @IsGranted("ROLE_SUPERUSER", message="No access! Get out!") */
 
     /**
@@ -21,5 +21,6 @@ class AdminController extends BaseController
     public function index(){
         return $this->render("admin/index.html.twig");
     }
+
 
 }

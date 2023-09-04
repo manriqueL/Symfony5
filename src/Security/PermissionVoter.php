@@ -20,7 +20,10 @@ class PermissionVoter extends Voter
         'ROLES',
         'USERS',
         'REPARTICION',
-        'AREA'
+        'AREA',
+        'ARCHIVOS',
+        'CATEGORÍAS',
+ 
     ];
 
     /* Voter generales */
