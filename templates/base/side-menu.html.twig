@@ -34,24 +34,13 @@
 {% if is_granted('VER_INICIO') %}
     {# Archivos #}
     <li class="nav-item {{ currentPath in 'index_personal' ? 'active' : '' }}">
-        <a class="nav-link collapsed" data-bs-toggle="collapse" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+        {# <a class="nav-link collapsed" data-bs-toggle="collapse" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseTwo"> #}
+        <a class="nav-link collapsed" href={{ path('index_roles') }} aria-expanded="false" aria-controls="collapseTwo">
             <i class="fa fa-file"></i>
-            <span>Archivos</span>
+            <span>Actividad Ip</span>
+    
         </a>
-        <div id="collapseThree" class="collapse">
-            <div class="bg-white py-2 collapse-inner rounded">
-                {% if is_granted('USERS_VER') %}
-                    <a class="collapse-item" href="{{ path('app_admin_users') }}">
-                        <i class="fa fa-user text-gray-600"></i> &nbsp; Personal
-                    </a>
-                {% endif %}
-                {% if is_granted('USERS_VER') %}
-                    <a class="collapse-item" href="{{ path('app_admin_users') }}">
-                        <i class="fa fa-user text-gray-600"></i> &nbsp; Clientes
-                    </a>
-                {% endif %}
-            </div>
-        </div>
+
     </li>
     <hr class="sidebar-divider my-0">
 {% endif %}
