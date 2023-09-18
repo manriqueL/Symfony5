@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IPScanController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+    {# templates/scan_results.html.twig #}
+
+    <h1>Resultados del escaneo de IP</h1>
+
+    {% for ip, status in results %}
+        <p>{{ ips }}: {{ status }}</p>
+    {% endfor %}
+{% endblock %}

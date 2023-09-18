@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IpController!{% endblock %}
+
+{% block body %}
+{# templates/ip/list.html.twig #}
+<h1 class="text-center">LISTA DE IPs</h1>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Dirección IP</th>
+                <th>Estado</th>
+                <th>Última conexión</th>
+                <th>Tiempo de Inactividad</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ip in ips %}
+                <tr>
+                    <td>{{ ip.ipAddress }}</td>
+                    <td>{% if ip.isActive %}Activa{% else %}Inactiva{% endif %}</td>
+                    <td>{% if ip.isActive != true %}{{ ip.lastDeactivatedAt|date('Y-m-d H:i:s') }}{% else %}Activa{% endif %}</td>
+                    <td id="timer-{{ ip.id }}"></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    {% for ip in ips %}
+        {% if not ip.isActive and ip.lastDeactivatedAt %}
+            var timer{{ ip.id }} = setInterval(function() {
+                var timerElement = document.getElementById('timer-{{ ip.id }}');
+                var lastDeactivatedAt = new Date('{{ ip.lastDeactivatedAt|date('Y-m-d H:i:s') }}');
+                var now = new Date();
+                var diff = Math.floor((now - lastDeactivatedAt) / 1000);
+                var hours = Math.floor(diff / 3600);
+                var minutes = Math.floor((diff % 3600) / 60);
+                var seconds = diff % 60;
+                timerElement.textContent = hours + 'h ' + minutes + 'm ' + seconds + 's';
+            }, 1000);
+        {% else %}
+            var timerElement = document.getElementById('timer-{{ ip.id }}');
+            timerElement.textContent = 'N/A';
+        {% endif %}
+    {% endfor %}
+</script>
+{% endblock %}

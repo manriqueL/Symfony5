@@ -1,7 +1,7 @@
 {# Logo Top #}
 <li class="nav-link sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('inicio_index') }}">
         <div class="sidebar-brand-icon">
-            <h1> <a class="mt-2 mb-2" style="color: #ffffff; font-weight: 630; font-family: 'Jost', sans-serif; text-decoration: none" href="{{ path('inicio_index') }}">{{ site_name }}</h1>
+            <h2> <a class="mt-2 mb-2" style="color: #ffffff; font-weight: 600; font-family: 'Jost', sans-serif; text-decoration: none" href="{{ path('inicio_index') }}">{{ site_name }}</h2>
 		    <img id="logo-side" class="logo-side" src="{{ asset('base/img/utnicon.png') }}" alt="UTN" width="50">
 
         </div>
@@ -74,22 +74,3 @@
 
 {% endif %}
 
-
-{# {% if is_granted('VER_INICIO') %}
-    <li class="nav-item {{currentPath == 'index_personal' ? 'active' : '' }}">
-        <a class="nav-link" href="{{ path('app_admin_index') }}">        
-            <i class="fas fa-box-open me-2"></i>
-            <span></span>
-        </a>
-            {% if is_granted('USERS_VER') %}
-                <a class="collapse-item" href="{{ path('app_login') }}">
-                    <i class="fa fa-user text-gray-600"></i> &nbsp; Personal
-                </a>
-                <a class="collapse-item" href="{{ path('app_login') }}">
-                    <i class="fa fa-list-alt text-gray-600"></i> &nbsp; Clientes
-                </a>
-        {% endif %}
-    </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-{% endif %} #}
